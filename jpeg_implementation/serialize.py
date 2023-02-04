@@ -122,15 +122,102 @@ def bytes_to_dict(dict_bytes):
     return dict(eval(dict_bytes))
 
 
-def store_as_image():
-    pass
+separator = b"\x00\x00\x00"
 
 
-def test():
+def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v):
+    t_y_b = dict_to_bytes(table_y)
+    t_u_b = dict_to_bytes(table_u)
+    t_v_b = dict_to_bytes(table_v)
+
+    d_y_b, prep_y = bitstring_to_bytes(enc_y)
+    d_u_b, prep_u = bitstring_to_bytes(enc_u)
+    d_v_b, prep_v = bitstring_to_bytes(enc_v)
+    bytes_size = len(t_y_b) + len(t_u_b) + len(t_v_b) + len(d_y_b) + len(d_u_b) + len(d_v_b) + 3
+
+    data = prep_y.to_bytes(1, byteorder="big") + separator + \
+           prep_u.to_bytes(1, byteorder="big") + separator + \
+           prep_v.to_bytes(1, byteorder="big") + separator + \
+           t_y_b + separator + \
+           t_u_b + separator + \
+           t_v_b + separator + \
+           d_y_b + separator + \
+           d_u_b + separator + \
+           d_v_b
+
+    assert data.count(separator) == 8
+
+    with open(filename, "wb") as fp:
+        fp.write(data)
+    return len(data)
+
+
+def read_from_file(filename):
+    with open(filename, "rb") as fp:
+        data = fp.read()
+
+        split_data = data.split(separator)
+
+        assert len(split_data) == 9
+
+        prep_y = int.from_bytes(split_data[0], byteorder="big")
+        prep_u = int.from_bytes(split_data[1], byteorder="big")
+        prep_v = int.from_bytes(split_data[2], byteorder="big")
+
+        table_y = bytes_to_dict(split_data[3])
+        table_u = bytes_to_dict(split_data[4])
+        table_v = bytes_to_dict(split_data[5])
+
+        enc_y = bytes_to_bitstring(split_data[6], prep_y)
+        enc_u = bytes_to_bitstring(split_data[7], prep_u)
+        enc_v = bytes_to_bitstring(split_data[8], prep_v)
+        return table_y, table_u, table_v, enc_y, enc_u, enc_v
+
+
+def test0():
     bits = "11111111"
     byte_string, prepended_bits = bitstring_to_bytes(bits)
     print(len(bits), byte_string)
     print(prepended_bits, 8 - (len(bits) % 8), (8 - (len(bits) % 8)) % 8)
 
 
-test()
+def test1():
+    huffman_code = {63: '111', 50: '11011111', 57: '11011110', -5.0: '1101110', 6.0: '110110', 5.0: '110101', 54: '0'}
+    dict_bytes = dict_to_bytes(huffman_code)
+    print(len(dict_bytes), type(dict_bytes))
+    with open("huffman.code", "wb") as fp:
+        fp.write(dict_bytes)
+
+    with open("huffman.code", "rb") as fp:
+        dict_bytes_file = fp.read()
+        reassembled = bytes_to_dict(dict_bytes_file)
+
+    print(reassembled == huffman_code)
+    print(dict_bytes)
+
+
+def test2():
+    encoded = "11101010010111010110010111010110010111010100000100001001100111010100100101000100001001101101010000101110101000010111010100001011111010100000111100101010010110010111110101001000010000100111010000100110111101100010111110101001011101011000000100101101000010011011010110011001001001100111011000000010011001110110000100001001100101010000000010010110000100110110101000010111010110010111010110010111010110010111011100101110111001011101011000100001001110100001001010110010100001011111010100010001111001010100110001000000100101101000010011011011000100010000100101101000010011011011000100101110110001001011111011000101111101010000001001100101010000101110101100101110101100010000100110011101010010010100010000100110110101000010111010100001"
+    # convert huffman encoded bits to bytes
+    byte_string, prepended_bits = bitstring_to_bytes(encoded)
+
+    # write bytes to file
+    with open("compressed.imagedata", "wb") as fp:
+        fp.write(byte_string)
+
+    # read file
+    with open("compressed.imagedata", "rb") as fp:
+        read_bytes = fp.read()
+
+    # decode bytes to bitstring
+    encoded_from_file = bytes_to_bitstring(read_bytes, prepended_bits)
+
+    # compare
+    print(len(byte_string), "bytes of image data", "prepended_bits:", prepended_bits)
+    print(len(encoded), len(encoded_from_file))
+    print(encoded == encoded_from_file)
+
+
+# test0()
+# test1()
+# test2()

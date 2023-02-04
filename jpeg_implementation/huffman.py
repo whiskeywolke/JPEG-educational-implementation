@@ -1,7 +1,7 @@
 class Node:
-    def __init__(self, value, occurence, left=None, right=None):
+    def __init__(self, value, occurrence, left=None, right=None):
         self.value = value
-        self.occurence = occurence
+        self.occurrence = occurrence
         self.left = left
         self.right = right
 
@@ -20,26 +20,25 @@ def traverse_tree(node, codes, current_code=""):
 
 
 def generate_huffman_code(values):
-    occurences = {}
+    occurrences = {}
     for val in values:
-        if val in occurences:
-            occurences[val] += 1
+        if val in occurrences:
+            occurrences[val] += 1
         else:
-            occurences[val] = 1
+            occurrences[val] = 1
 
-    #    print(len(occurences), occurences)
-
-    nodes = [Node(val, occ) for val, occ in occurences.items()]
+    nodes = [Node(val, occ) for val, occ in occurrences.items()]
+    root_node = Node("", 0)
 
     while len(nodes) > 1:
-        nodes = sorted(nodes, key=lambda x: x.occurence)
+        nodes = sorted(nodes, key=lambda x: x.occurrence)
 
         left = nodes[0]
         right = nodes[1]
         nodes.remove(left)
         nodes.remove(right)
 
-        root_node = Node("", left.occurence + right.occurence, left, right)
+        root_node = Node("", left.occurrence + right.occurrence, left, right)
         nodes.append(root_node)
 
     codes = {}
@@ -53,3 +52,24 @@ def encode_huffman(huffman_code, message):
     for val in message:
         encoded += huffman_code[val]
     return encoded
+
+
+def decode_huffman(encoded, table):
+    # reverse lookup table
+    new_table = {key: value for value, key in table.items()}
+    assert len(table) == len(new_table)
+
+    decoded = []
+    symbol = None
+    for s in encoded:
+        if symbol is None:
+            symbol = s
+        else:
+            symbol += s
+        if symbol in new_table:
+            decoded.append(new_table[symbol])
+            symbol = None
+
+    # check that all symbols have been found
+    assert symbol is None
+    return decoded
