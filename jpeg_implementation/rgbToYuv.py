@@ -1,4 +1,5 @@
 import cv2  # pip install opvencv-python
+import numpy as np
 
 
 def rgb_to_yuv(image):
@@ -9,5 +10,7 @@ def rgb_to_yuv(image):
 
 def yuv_to_rgb(y, u, v):
     yuv = cv2.merge((y, u, v))
+    yuv = np.float32(yuv)
+    yuv /= 255
     image = cv2.cvtColor(yuv, cv2.COLOR_YUV2RGB)
-    return image
+    return (image * 255).astype(int)
