@@ -121,7 +121,7 @@ def unsort_and_run_length_decode(color_component, block_size):
         block = resort_values_zig_zag_reverse(block_zig_zag, block_size)
         blocks.append(block)
 
-    return blocks
+    return np.array(blocks)
 
 
 def test():

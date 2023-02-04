@@ -38,3 +38,75 @@ def split(color_component_in, block_size=8):
             blocks.append(block)
     #    blocks = np.array(blocks)
     return blocks
+
+
+def merge_blocks(color_component, resolution=(32, 32), block_size=8):
+    color_component = np.array(color_component)
+
+    row_count = resolution[1] // block_size
+    if resolution[1] % block_size != 0:
+        row_count += 1
+
+    row_blocks = np.split(color_component, row_count)
+
+    rows = []
+    for row in row_blocks:
+        rows.append(np.hstack(row))
+
+    rows = np.vstack(rows)
+
+    return rows[:resolution[1], :resolution[0]]
+
+
+def test():
+    blocks = [
+        [
+            [0, 1],
+            [2, 3]
+        ],
+        [
+            [4, 5],
+            [6, 7]
+        ],
+        [
+            [8, 9],
+            [10, 11]
+        ],
+        [
+            [12, 13],
+            [14, 15]
+        ]
+    ]
+    blocks = np.array(blocks)
+    merge_blocks(blocks, (4, 4), 2)
+
+    # img_size = 4
+    # d = np.array(range(img_size ** 2)).reshape((img_size, img_size))
+    # sd = split(d, 2)
+    # print(len(sd))
+    # d2 = merge_blocks(sd, (img_size, img_size), 2)
+    # print(d2)
+    # print(np.array_equal(d, d2))
+    #
+    # img_size = 512
+    # d = np.array(range(img_size ** 2)).reshape((img_size, img_size))
+    # sd = split(d)
+    # d2 = merge_blocks(sd, (img_size, img_size))
+    # print(np.array_equal(d, d2))
+
+    img_size = 5
+    d = np.array(range(img_size ** 2)).reshape((img_size, img_size))
+    sd = split(d, 2)
+    d2 = merge_blocks(sd, (img_size, img_size), 2)
+    print(np.array_equal(d, d2))
+
+    img_size_x = 713
+    img_size_y = 999
+    d = np.array(range(img_size_x*img_size_y)).reshape((img_size_y, img_size_x))
+    sd = split(d, 2)
+    d2 = merge_blocks(sd, (img_size_x, img_size_y), 2)
+    print(np.array_equal(d, d2))
+
+
+
+test()

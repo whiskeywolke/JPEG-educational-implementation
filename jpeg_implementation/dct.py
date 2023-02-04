@@ -33,7 +33,19 @@ def block_dct2(blocks, block_size):
     return transformed
 
 
-def test():
+def block_idct2(blocks, block_size):
+    transformed = []
+    transformation_mat = dct_mat(block_size)
+
+    for block in blocks:
+        transformed.append(np.matmul(np.matmul(transformation_mat.transpose(), block), transformation_mat))
+
+    transformed = np.array(transformed)
+
+    return transformed
+
+
+def test_dct():
     # https://www.math.cuhk.edu.hk/~lmlui/dct.pdf
     data_list = [
         26, -5, -5, -5, -5, -5, -5, 8,
@@ -50,5 +62,14 @@ def test():
     print(np.matrix(np.round(dct_mat(8), 4)))  # dct matrix is correct
 
     block_size = 8
-    b = block_dct2([matrix], block_size)  # block transform is also correct
-    print(b)
+    b = np.array([matrix])
+    b_trans = block_dct2(b, block_size)  # block transform is also correct
+    # print(b.shape)
+    # print(np.matrix(np.round(b, 2)))
+    ib = block_idct2(b_trans, block_size)
+
+    print(np.array_equal(np.round(b-ib, 10), np.zeros(b.shape)))  # check idct result by 10 decimal points -> correct
+
+
+test_dct()
+

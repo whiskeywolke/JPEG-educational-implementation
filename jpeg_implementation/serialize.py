@@ -122,7 +122,7 @@ def bytes_to_dict(dict_bytes):
     return dict(eval(dict_bytes))
 
 
-separator = b"\x00\x00\x00"
+separator = b"\x00\x00\x00\x00"
 
 
 def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v):
