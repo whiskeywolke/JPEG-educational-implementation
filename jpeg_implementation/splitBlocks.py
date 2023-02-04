@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def resize_to_blocksize(color_component_in, block_size):
     remainder_y = block_size - color_component_in.shape[0] % block_size
     remainder_x = block_size - color_component_in.shape[1] % block_size
@@ -21,8 +22,8 @@ def resize_to_blocksize(color_component_in, block_size):
 
     return color_component
 
-def split(color_component_in, block_size=8):
 
+def split(color_component_in, block_size=8):
     color_component = resize_to_blocksize(color_component_in, block_size)
     blocks = []
     for block_y in range(color_component.shape[0] // block_size):
@@ -35,6 +36,5 @@ def split(color_component_in, block_size=8):
 
             block = np.array([row[block_start_x:block_end_x] for row in color_component[block_start_y:block_end_y]])
             blocks.append(block)
-#    blocks = np.array(blocks)
+    #    blocks = np.array(blocks)
     return blocks
-

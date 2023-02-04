@@ -17,14 +17,13 @@ def resort_values(block, block_size):
                 x = block_size - 1
                 y = diag - block_size + 1
 
-        while x < block_size and y < block_size and x >= 0 and y >= 0:
+        while block_size > x >= 0 and block_size > y >= 0:
             new_block.append(block[y][x])
-            
-            if(direction):
+            if direction:
                 x += 1
-                y -=1
+                y -= 1
             else:
-                x -=1
+                x -= 1
                 y += 1
 
     return new_block
@@ -45,7 +44,7 @@ def run_length_encode(input_vals):
     encoded_list.append((current, current_counter))
 
     return encoded_list
-        
+
 
 def flatten(encoded):
     res = []

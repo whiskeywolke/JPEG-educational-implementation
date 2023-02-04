@@ -1,8 +1,8 @@
 def subsample_u_v(u, v, j, a, b):
     """
-    subsamples the u v components based on the ratio given by j a b
+    sub-samples the u v components based on the ratio given by j a b
     j is the sampling reference width
-        each block that is subsampled is of size j * 2
+        each block that is sub-sampled is of size j * 2
     a is the number of samples in the first row
     b is the number of samples in the second row equal to a or 0
     """

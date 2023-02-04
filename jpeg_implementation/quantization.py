@@ -35,26 +35,25 @@ quantization_90_values = [
     14, 18, 19, 20, 22, 20, 20, 20,
 ]
 
-
 quantization_10 = np.array(quantization_10_values).reshape(8, 8)
 quantization_50 = np.array(quantization_50_values).reshape(8, 8)
 quantization_90 = np.array(quantization_90_values).reshape(8, 8)
 
-quantization_100 = np.zeros((8,8)) + 1
+quantization_100 = np.zeros((8, 8)) + 1
 
 quantization_tables = {
-    100 : quantization_100,
-    90 : quantization_90,
-    50 : quantization_50,
-    10: quantization_10, 
+    100: quantization_100,
+    90: quantization_90,
+    50: quantization_50,
+    10: quantization_10,
 }
 
 
-def quantize(blocks, qunatization_table):
+def quantize(blocks, quantization_table):
     quantized = []
 
     for block in blocks:
-        quantized.append(np.round(np.divide(block, qunatization_table), 0))
+        quantized.append(np.round(np.divide(block, quantization_table), 0))
 
     quantized = np.array(quantized)
 

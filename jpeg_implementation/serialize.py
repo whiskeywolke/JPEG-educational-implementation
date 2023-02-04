@@ -1,4 +1,3 @@
-
 def bitstring_to_bytes(bits):
     # prepends bits in the front to even number of bytes
     prepended = 0
@@ -60,14 +59,13 @@ def dict_to_bytes(dictionary):
     dict_string = dict_string.replace("01", "r")
     dict_string = dict_string.replace("10", "R")
 
-
     dict_string = dict_string.replace(",-", "y")
     dict_string = dict_string.replace(":0", "z")
     dict_string = dict_string.replace(":1", "Z")
 
-
     res = bytes(dict_string, 'ascii')
     return res
+
 
 def bytes_to_dict(dict_bytes):
     # reconstruct removed information
@@ -75,7 +73,7 @@ def bytes_to_dict(dict_bytes):
     dict_bytes = dict_bytes.replace(":", ":'")
     dict_bytes = dict_bytes.replace(",", "',")
     dict_bytes = dict_bytes + "'"
-    
+
     # reconstruct sequences
     dict_bytes = dict_bytes.replace("a", "0000000000")
     dict_bytes = dict_bytes.replace("A", "1111111111")
@@ -119,24 +117,20 @@ def bytes_to_dict(dict_bytes):
     dict_bytes = dict_bytes.replace("z", ":'0")
     dict_bytes = dict_bytes.replace("Z", ":'1")
 
-
     dict_bytes = bytes(dict_bytes, "ascii")
     dict_bytes = b"".join([bytes("{", "ascii"), dict_bytes, bytes("}", "ascii")])
     return dict(eval(dict_bytes))
-
-
 
 
 def store_as_image():
     pass
 
 
-
-
 def test():
     bits = "11111111"
     byte_string, prepended_bits = bitstring_to_bytes(bits)
     print(len(bits), byte_string)
-    print(prepended_bits, 8 - (len(bits) % 8), (8 - (len(bits) % 8))%8)
+    print(prepended_bits, 8 - (len(bits) % 8), (8 - (len(bits) % 8)) % 8)
+
 
 test()
