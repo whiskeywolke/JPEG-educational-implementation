@@ -108,5 +108,12 @@ def test():
     print(np.array_equal(d, d2))
 
 
+    img_size_x = 194
+    img_size_y = 129
+    d = np.array(range(img_size_x*img_size_y)).reshape((img_size_y, img_size_x))
+    sd = split(d, 2)
+    d2 = merge_blocks(sd, (img_size_x, img_size_y), 2)
+    print(np.array_equal(d, d2))
+
 
 test()
