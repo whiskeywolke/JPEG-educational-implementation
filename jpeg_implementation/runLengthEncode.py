@@ -236,4 +236,4 @@ def test():
     # # print(list(random_list.reshape(1,64)[0]) == b)
 
 
-test()
+# test()

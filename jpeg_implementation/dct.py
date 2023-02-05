@@ -71,5 +71,5 @@ def test_dct():
     print(np.array_equal(np.round(b-ib, 10), np.zeros(b.shape)))  # check idct result by 10 decimal points -> correct
 
 
-test_dct()
+# test_dct()
 
