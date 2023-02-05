@@ -128,7 +128,7 @@ def bytes_to_dict(dict_bytes):
 separator = b"\x00\x01\x02"
 
 
-def image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table):
+def image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table, j, a, b, x_dim, y_dim):
     t_y_b = dict_to_bytes(table_y)
     t_u_b = dict_to_bytes(table_u)
     t_v_b = dict_to_bytes(table_v)
@@ -141,10 +141,17 @@ def image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantiza
     for x in np.reshape(quantization_table, (1, 64))[0]:
         quantization_table_bytes += int(x).to_bytes(1, byteorder="big")
 
+    assert x_dim < 2**16 and y_dim < 2**16
+
     data = \
         prep_y.to_bytes(1, byteorder="big") + separator + \
         prep_u.to_bytes(1, byteorder="big") + separator + \
         prep_v.to_bytes(1, byteorder="big") + separator + \
+        j.to_bytes(1, byteorder="big") + separator + \
+        a.to_bytes(1, byteorder="big") + separator + \
+        b.to_bytes(1, byteorder="big") + separator + \
+        x_dim.to_bytes(16, byteorder="big") + separator + \
+        y_dim.to_bytes(16, byteorder="big") + separator + \
         t_y_b + separator + \
         t_u_b + separator + \
         t_v_b + separator + \
@@ -153,12 +160,12 @@ def image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantiza
         d_v_b + separator + \
         quantization_table_bytes
 
-    assert data.count(separator) == 9
+    assert data.count(separator) == 14
     return data
 
 
-def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table):
-    data = image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table)
+def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table, j, a, b, x_dim, y_dim):
+    data = image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table, j, a, b,  x_dim, y_dim)
 
     with open(filename, "wb") as fp:
         fp.write(data)
@@ -167,24 +174,31 @@ def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v, quan
 
 def bytes_to_image_data(byte_data):
     split_data = byte_data.split(separator)
-    assert len(split_data) == 10
+    assert len(split_data) == 15
 
     prep_y = int.from_bytes(split_data[0], byteorder="big")
     prep_u = int.from_bytes(split_data[1], byteorder="big")
     prep_v = int.from_bytes(split_data[2], byteorder="big")
 
-    table_y = bytes_to_dict(split_data[3])
-    table_u = bytes_to_dict(split_data[4])
-    table_v = bytes_to_dict(split_data[5])
+    j = int.from_bytes(split_data[3], byteorder="big")
+    a = int.from_bytes(split_data[4], byteorder="big")
+    b = int.from_bytes(split_data[5], byteorder="big")
 
-    enc_y = bytes_to_bitstring(split_data[6], prep_y)
-    enc_u = bytes_to_bitstring(split_data[7], prep_u)
-    enc_v = bytes_to_bitstring(split_data[8], prep_v)
+    x_dim = int.from_bytes(split_data[6], byteorder="big")
+    y_dim = int.from_bytes(split_data[7], byteorder="big")
 
-    quantization_table = [b for b in split_data[9]]
+    table_y = bytes_to_dict(split_data[8])
+    table_u = bytes_to_dict(split_data[9])
+    table_v = bytes_to_dict(split_data[10])
+
+    enc_y = bytes_to_bitstring(split_data[11], prep_y)
+    enc_u = bytes_to_bitstring(split_data[12], prep_u)
+    enc_v = bytes_to_bitstring(split_data[13], prep_v)
+
+    quantization_table = [b for b in split_data[14]]
     quantization_table = np.reshape(quantization_table, (8, 8))
 
-    return table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table
+    return table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table, j, a, b, x_dim, y_dim
 
 
 def read_from_file(filename):

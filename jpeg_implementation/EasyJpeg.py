@@ -62,14 +62,16 @@ class EasyJpeg:
 
         self.compressed_byte_data = image_data_to_bytes(huffman_code_y, huffman_code_u, huffman_code_v,
                                                         huff_encoded_y, huff_encoded_u, huff_encoded_v,
-                                                        quantization_table
+                                                        quantization_table,
+                                                        *subsampling_settings,
+                                                        *self.original_image_resolution
                                                         )
         self.compression_ratio = self.original_size / len(self.compressed_byte_data)
 
         return self.compression_ratio
 
     def __decompress(self, image_data_bytes):
-        code_y, code_u, code_v, encoded_y, encoded_u, encoded_v, quantization_table = bytes_to_image_data(
+        code_y, code_u, code_v, encoded_y, encoded_u, encoded_v, quantization_table, j, a, b, x_dim, y_dim = bytes_to_image_data(
             image_data_bytes)
         rl_encoded_y = decode_huffman(encoded_y, code_y)
         rl_encoded_u = decode_huffman(encoded_u, code_u)
@@ -88,8 +90,8 @@ class EasyJpeg:
         id_u = block_idct2(iq_u, block_size) + 128
         id_v = block_idct2(iq_v, block_size) + 128
 
-        subsampling_settings = (4, 4, 0)  # todo save to file
-        original_image_resolution = (32, 32)  # todo save to file
+        subsampling_settings = (j, a, b)
+        original_image_resolution = (x_dim, y_dim)
         downsampled_resolution = calculate_down_sampled_resolution(*subsampling_settings, original_image_resolution)
         compressed_y = merge_blocks(id_y, original_image_resolution, block_size)
         compressed_u = merge_blocks(id_u, downsampled_resolution, block_size)
@@ -112,6 +114,9 @@ class EasyJpeg:
 
     def get_decompressed(self):
         return self.decompressed
+
+    def get_compression_ratio(self):
+        return self.compression_ratio
 
     def show_compressed(self):
         fig, ax = plt.subplots()
@@ -144,8 +149,9 @@ def main():
     jpeg = EasyJpeg(image_path, 10, (4, 4, 4), 8)
 
     jpeg.get_decompressed()
-    jpeg.show_difference()
-    jpeg.show_difference(extrapolate=True)
+    print(jpeg.get_compression_ratio())
+    # jpeg.show_difference()
+    # jpeg.show_difference(extrapolate=True)
 
 
 if __name__ == "__main__":
