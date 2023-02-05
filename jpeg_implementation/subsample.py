@@ -31,8 +31,8 @@ def up_sample_u_v(u, v, j, a, b, resolution=(32, 32)):
         return u, v
 
     if b != 0:
-        u_up = u.repeat(1, axis=0).repeat(2, axis=1)
-        v_up = v.repeat(1, axis=0).repeat(2, axis=1)
+        u_up = u.repeat(1, axis=0).repeat(j // a, axis=1)
+        v_up = v.repeat(1, axis=0).repeat(j // a, axis=1)
     else:
         u_up = u.repeat(2, axis=0).repeat(j // a, axis=1)
         v_up = v.repeat(2, axis=0).repeat(j // a, axis=1)

@@ -27,7 +27,7 @@ class EasyJpeg:
         self.compression_ratio = compression_ratio
 
     @staticmethod
-    def from_png(path, quantization_table_quality, subsampling_settings, block_size):
+    def from_png(path, quantization_table_quality, subsampling_settings, block_size=8):
         original_image = plt.imread(path)
         # strip alpha channel if exists
         if original_image.shape[2] == 4:
@@ -135,9 +135,11 @@ class EasyJpeg:
     def get_compression_ratio(self):
         return self.compression_ratio
 
-    def show_decompressed(self):
+    def show_decompressed(self, title=None):
         fig, ax = plt.subplots()
         ax.imshow(self.get_decompressed().astype(np.uint8))
+        if title:
+            ax.set_title(title)
         plt.show()
 
     def get_difference(self, extrapolate=False):
@@ -165,6 +167,7 @@ class EasyJpeg:
 
     def store_compressed_png(self, path):
         plt.imsave(path, self.decompressed_image.astype(np.uint8))
+
 
 def main():
     image_path = "../images/lenna_32x32.png"
