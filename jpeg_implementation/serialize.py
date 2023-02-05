@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def bitstring_to_bytes(bits):
     # prepends bits in the front to even number of bytes
     prepended = 0
@@ -122,10 +125,10 @@ def bytes_to_dict(dict_bytes):
     return dict(eval(dict_bytes))
 
 
-separator = b"\x00\x00\x00\x00"
+separator = b"\x00\x00\x00\x00\x00"
 
 
-def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v):
+def image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table):
     t_y_b = dict_to_bytes(table_y)
     t_u_b = dict_to_bytes(table_u)
     t_v_b = dict_to_bytes(table_v)
@@ -133,45 +136,63 @@ def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v):
     d_y_b, prep_y = bitstring_to_bytes(enc_y)
     d_u_b, prep_u = bitstring_to_bytes(enc_u)
     d_v_b, prep_v = bitstring_to_bytes(enc_v)
-    bytes_size = len(t_y_b) + len(t_u_b) + len(t_v_b) + len(d_y_b) + len(d_u_b) + len(d_v_b) + 3
 
-    data = prep_y.to_bytes(1, byteorder="big") + separator + \
-           prep_u.to_bytes(1, byteorder="big") + separator + \
-           prep_v.to_bytes(1, byteorder="big") + separator + \
-           t_y_b + separator + \
-           t_u_b + separator + \
-           t_v_b + separator + \
-           d_y_b + separator + \
-           d_u_b + separator + \
-           d_v_b
+    quantization_table_bytes = b""
+    for x in np.reshape(quantization_table, (1, 64))[0]:
+        quantization_table_bytes += int(x).to_bytes(1, byteorder="big")
 
-    assert data.count(separator) == 8
+    data = \
+        prep_y.to_bytes(1, byteorder="big") + separator + \
+        prep_u.to_bytes(1, byteorder="big") + separator + \
+        prep_v.to_bytes(1, byteorder="big") + separator + \
+        t_y_b + separator + \
+        t_u_b + separator + \
+        t_v_b + separator + \
+        d_y_b + separator + \
+        d_u_b + separator + \
+        d_v_b + separator + \
+        quantization_table_bytes
+
+    assert data.count(separator) == 9
+    return data
+
+
+def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table):
+    data = image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table)
 
     with open(filename, "wb") as fp:
         fp.write(data)
     return len(data)
 
 
+def bytes_to_image_data(byte_data):
+    split_data = byte_data.split(separator)
+
+    assert len(split_data) == 10
+
+    prep_y = int.from_bytes(split_data[0], byteorder="big")
+    prep_u = int.from_bytes(split_data[1], byteorder="big")
+    prep_v = int.from_bytes(split_data[2], byteorder="big")
+
+    table_y = bytes_to_dict(split_data[3])
+    table_u = bytes_to_dict(split_data[4])
+    table_v = bytes_to_dict(split_data[5])
+
+    enc_y = bytes_to_bitstring(split_data[6], prep_y)
+    enc_u = bytes_to_bitstring(split_data[7], prep_u)
+    enc_v = bytes_to_bitstring(split_data[8], prep_v)
+
+    quantization_table = [b for b in split_data[9]]
+    quantization_table = np.reshape(quantization_table, (8, 8))
+
+    return table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table
+
+
 def read_from_file(filename):
     with open(filename, "rb") as fp:
         data = fp.read()
 
-        split_data = data.split(separator)
-
-        assert len(split_data) == 9
-
-        prep_y = int.from_bytes(split_data[0], byteorder="big")
-        prep_u = int.from_bytes(split_data[1], byteorder="big")
-        prep_v = int.from_bytes(split_data[2], byteorder="big")
-
-        table_y = bytes_to_dict(split_data[3])
-        table_u = bytes_to_dict(split_data[4])
-        table_v = bytes_to_dict(split_data[5])
-
-        enc_y = bytes_to_bitstring(split_data[6], prep_y)
-        enc_u = bytes_to_bitstring(split_data[7], prep_u)
-        enc_v = bytes_to_bitstring(split_data[8], prep_v)
-        return table_y, table_u, table_v, enc_y, enc_u, enc_v
+        return bytes_to_image_data(data)
 
 
 def test0():
@@ -216,7 +237,6 @@ def test2():
     print(len(byte_string), "bytes of image data", "prepended_bits:", prepended_bits)
     print(len(encoded), len(encoded_from_file))
     print(encoded == encoded_from_file)
-
 
 # test0()
 # test1()

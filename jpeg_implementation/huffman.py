@@ -71,5 +71,10 @@ def decode_huffman(encoded, table):
             symbol = None
 
     # check that all symbols have been found
+    if symbol:
+        print(encoded)
+        print(table)
+        print(symbol)
+        print(decoded)
     assert symbol is None
     return decoded
