@@ -29,6 +29,7 @@ class EasyJpeg:
         self.original_image_resolution = tuple(reversed(self.original_image.shape[:2]))
         self.original_size = os.path.getsize(self.path)
         self.__compress(quantization_table_quality, subsampling_settings, block_size)
+        self.__decompress(self.compressed_byte_data)
 
     def __compress(self, quantization_table_quality, subsampling_settings, block_size):
         if self.compression_ratio:
@@ -67,20 +68,9 @@ class EasyJpeg:
 
         return self.compression_ratio
 
-    def show_original(self):
-        fig, ax = plt.subplots()
-        ax.imshow(self.original_image)
-        plt.show()
-
-    def get_original(self):
-        return self.original_image
-
-    def get_compressed(self):
-        if self.decompressed:
-            return self.decompressed
-
+    def __decompress(self, image_data_bytes):
         code_y, code_u, code_v, encoded_y, encoded_u, encoded_v, quantization_table = bytes_to_image_data(
-            self.compressed_byte_data)
+            image_data_bytes)
         rl_encoded_y = decode_huffman(encoded_y, code_y)
         rl_encoded_u = decode_huffman(encoded_u, code_u)
         rl_encoded_v = decode_huffman(encoded_v, code_v)
@@ -111,23 +101,51 @@ class EasyJpeg:
         reconstructed_image = yuv_to_rgb(compressed_y, compressed_u, compressed_v)
         reconstructed_image = reconstructed_image.astype(int)
         self.decompressed = reconstructed_image.clip(0, 255)
+
+    def show_original(self):
+        fig, ax = plt.subplots()
+        ax.imshow(self.original_image)
+        plt.show()
+
+    def get_original(self):
+        return self.original_image
+
+    def get_decompressed(self):
         return self.decompressed
 
     def show_compressed(self):
         fig, ax = plt.subplots()
-        ax.imshow(self.get_compressed().astype(np.uint8))
+        ax.imshow(self.get_decompressed().astype(np.uint8))
         plt.show()
 
-    # def get_differe
+    def get_difference(self, extrapolate=False):
+        print(np.max(self.original_image))
+        print(np.max(self.decompressed))
+
+        original_image_rescaled = self.original_image * 255
+        original_image_rescaled = original_image_rescaled.astype(int)
+        diff = np.abs(original_image_rescaled - self.decompressed)
+
+        if extrapolate:
+            diff = diff * (255 / np.max(diff))
+            diff = diff.astype(int)
+
+        return diff
+
+    def show_difference(self, extrapolate=False):
+        fig, ax = plt.subplots()
+        ax.imshow(self.get_difference(extrapolate))
+        plt.show()
 
 
 def main():
     image_path = "../images/lenna_32x32.png"
 
     jpeg = EasyJpeg(image_path, 10, (4, 4, 4), 8)
-    # jpeg = EasyJpeg(image_path, 10, (4, 4, 0), 8)
 
-    jpeg.get_compressed()
+    jpeg.get_decompressed()
+    jpeg.show_difference()
+    jpeg.show_difference(extrapolate=True)
 
 
 if __name__ == "__main__":
