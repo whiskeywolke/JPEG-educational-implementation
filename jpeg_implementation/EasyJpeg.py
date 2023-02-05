@@ -16,7 +16,7 @@ from jpeg_implementation.subsample import subsample_u_v, calculate_down_sampled_
 class EasyJpeg:
     compression_ratio = None
     compressed_byte_data = None
-    compressed = None
+    decompressed = None
 
     def __init__(self, path, quantization_table_quality, subsampling_settings, block_size):
         self.path = path
@@ -65,17 +65,6 @@ class EasyJpeg:
                                                         )
         self.compression_ratio = self.original_size / len(self.compressed_byte_data)
 
-        # a, b, c, d, e, f, g = bytes_to_image_data(self.compressed_byte_data)
-        #
-        # # true
-        # print(huffman_code_y == a)
-        # print(huffman_code_u == b)
-        # print(huffman_code_v == c)
-        # print(huff_encoded_y == d)
-        # print(huff_encoded_u == e)
-        # print(huff_encoded_v == f)
-        # print(np.array_equal(quantization_table, g))
-
         return self.compression_ratio
 
     def show_original(self):
@@ -87,8 +76,8 @@ class EasyJpeg:
         return self.original_image
 
     def get_compressed(self):
-        if self.compressed:
-            return self.compressed
+        if self.decompressed:
+            return self.decompressed
 
         code_y, code_u, code_v, encoded_y, encoded_u, encoded_v, quantization_table = bytes_to_image_data(
             self.compressed_byte_data)
@@ -109,8 +98,8 @@ class EasyJpeg:
         id_u = block_idct2(iq_u, block_size) + 128
         id_v = block_idct2(iq_v, block_size) + 128
 
-        subsampling_settings = (4, 4, 0)
-        original_image_resolution = (32, 32)
+        subsampling_settings = (4, 4, 0)  # todo save to file
+        original_image_resolution = (32, 32)  # todo save to file
         downsampled_resolution = calculate_down_sampled_resolution(*subsampling_settings, original_image_resolution)
         compressed_y = merge_blocks(id_y, original_image_resolution, block_size)
         compressed_u = merge_blocks(id_u, downsampled_resolution, block_size)
@@ -121,8 +110,8 @@ class EasyJpeg:
 
         reconstructed_image = yuv_to_rgb(compressed_y, compressed_u, compressed_v)
         reconstructed_image = reconstructed_image.astype(int)
-        self.compressed = reconstructed_image.clip(0, 255)
-        return self.compressed
+        self.decompressed = reconstructed_image.clip(0, 255)
+        return self.decompressed
 
     def show_compressed(self):
         fig, ax = plt.subplots()
@@ -135,8 +124,8 @@ class EasyJpeg:
 def main():
     image_path = "../images/lenna_32x32.png"
 
-    # jpeg = EasyJpeg(image_path, 10, (4, 4, 4), 8)  #fixme
-    jpeg = EasyJpeg(image_path, 10, (4, 4, 0), 8)
+    jpeg = EasyJpeg(image_path, 10, (4, 4, 4), 8)
+    # jpeg = EasyJpeg(image_path, 10, (4, 4, 0), 8)
 
     jpeg.get_compressed()
 

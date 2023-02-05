@@ -125,7 +125,7 @@ def bytes_to_dict(dict_bytes):
     return dict(eval(dict_bytes))
 
 
-separator = b"\x00\x00\x00\x00\x00"
+separator = b"\x00\x01\x02"
 
 
 def image_data_to_bytes(table_y, table_u, table_v, enc_y, enc_u, enc_v, quantization_table):
@@ -167,7 +167,6 @@ def store_as_file(filename, table_y, table_u, table_v, enc_y, enc_u, enc_v, quan
 
 def bytes_to_image_data(byte_data):
     split_data = byte_data.split(separator)
-
     assert len(split_data) == 10
 
     prep_y = int.from_bytes(split_data[0], byteorder="big")
