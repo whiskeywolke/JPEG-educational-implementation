@@ -14,28 +14,46 @@ from jpeg_implementation.subsample import subsample_u_v, calculate_down_sampled_
 
 
 class EasyJpeg:
-    compression_ratio = None
+    original_image = None
+    decompressed_image = None
+
     compressed_byte_data = None
-    decompressed = None
+    compression_ratio = None
 
-    def __init__(self, path, quantization_table_quality, subsampling_settings, block_size):
-        self.path = path
-        self.original_image = plt.imread(self.path)
+    def __init__(self, original_image, decompressed_image, compressed_byte_data, compression_ratio):
+        self.original_image = original_image
+        self.decompressed_image = decompressed_image
+        self.compressed_byte_data = compressed_byte_data
+        self.compression_ratio = compression_ratio
+
+    @staticmethod
+    def from_png(path, quantization_table_quality, subsampling_settings, block_size):
+        original_image = plt.imread(path)
         # strip alpha channel if exists
-        if self.original_image.shape[2] == 4:
-            channels = np.dsplit(self.original_image, 4)
-            self.original_image = np.dstack(channels[:3])
+        if original_image.shape[2] == 4:
+            channels = np.dsplit(original_image, 4)
+            original_image = np.dstack(channels[:3])
 
-        self.original_image_resolution = tuple(reversed(self.original_image.shape[:2]))
-        self.original_size = os.path.getsize(self.path)
-        self.__compress(quantization_table_quality, subsampling_settings, block_size)
-        self.__decompress(self.compressed_byte_data)
+        original_size = os.path.getsize(path)
 
-    def __compress(self, quantization_table_quality, subsampling_settings, block_size):
-        if self.compression_ratio:
-            return self.compression_ratio
+        compressed_byte_data = EasyJpeg.__compress(original_image, quantization_table_quality, subsampling_settings,
+                                                   block_size)
+        decompressed_image = EasyJpeg.__decompress(compressed_byte_data)
+        compression_ratio = original_size / len(compressed_byte_data)
 
-        y, u, v = rgb_to_yuv(image=self.original_image)
+        return EasyJpeg(original_image, decompressed_image, compressed_byte_data, compression_ratio)
+
+    @staticmethod
+    def from_compressed(path):
+        with open(path, "rb") as fp:
+            data = fp.read()
+            decompressed_image = EasyJpeg.__decompress(data)
+            return EasyJpeg(None, decompressed_image, data, None)
+
+    @staticmethod
+    def __compress(original_image, quantization_table_quality, subsampling_settings, block_size):
+        original_image_resolution = tuple(reversed(original_image.shape[:2]))
+        y, u, v = rgb_to_yuv(image=original_image)
         u_subs, v_subs = subsample_u_v(u, v, *subsampling_settings)
         split_y = split(y, block_size)
         split_u = split(u_subs, block_size)
@@ -60,17 +78,16 @@ class EasyJpeg:
         huff_encoded_u = encode_huffman(huffman_code_u, rl_encoded_u)
         huff_encoded_v = encode_huffman(huffman_code_v, rl_encoded_v)
 
-        self.compressed_byte_data = image_data_to_bytes(huffman_code_y, huffman_code_u, huffman_code_v,
-                                                        huff_encoded_y, huff_encoded_u, huff_encoded_v,
-                                                        quantization_table,
-                                                        *subsampling_settings,
-                                                        *self.original_image_resolution
-                                                        )
-        self.compression_ratio = self.original_size / len(self.compressed_byte_data)
+        compressed_byte_data = image_data_to_bytes(huffman_code_y, huffman_code_u, huffman_code_v,
+                                                   huff_encoded_y, huff_encoded_u, huff_encoded_v,
+                                                   quantization_table,
+                                                   *subsampling_settings,
+                                                   *original_image_resolution
+                                                   )
+        return compressed_byte_data
 
-        return self.compression_ratio
-
-    def __decompress(self, image_data_bytes):
+    @staticmethod
+    def __decompress(image_data_bytes):
         code_y, code_u, code_v, encoded_y, encoded_u, encoded_v, quantization_table, j, a, b, x_dim, y_dim = bytes_to_image_data(
             image_data_bytes)
         rl_encoded_y = decode_huffman(encoded_y, code_y)
@@ -102,7 +119,7 @@ class EasyJpeg:
 
         reconstructed_image = yuv_to_rgb(compressed_y, compressed_u, compressed_v)
         reconstructed_image = reconstructed_image.astype(int)
-        self.decompressed = reconstructed_image.clip(0, 255)
+        return reconstructed_image.clip(0, 255)
 
     def show_original(self):
         fig, ax = plt.subplots()
@@ -113,23 +130,23 @@ class EasyJpeg:
         return self.original_image
 
     def get_decompressed(self):
-        return self.decompressed
+        return self.decompressed_image
 
     def get_compression_ratio(self):
         return self.compression_ratio
 
-    def show_compressed(self):
+    def show_decompressed(self):
         fig, ax = plt.subplots()
         ax.imshow(self.get_decompressed().astype(np.uint8))
         plt.show()
 
     def get_difference(self, extrapolate=False):
         print(np.max(self.original_image))
-        print(np.max(self.decompressed))
+        print(np.max(self.decompressed_image))
 
         original_image_rescaled = self.original_image * 255
         original_image_rescaled = original_image_rescaled.astype(int)
-        diff = np.abs(original_image_rescaled - self.decompressed)
+        diff = np.abs(original_image_rescaled - self.decompressed_image)
 
         if extrapolate:
             diff = diff * (255 / np.max(diff))
@@ -137,21 +154,32 @@ class EasyJpeg:
 
         return diff
 
+    def store_compressed(self, path):
+        with open(path, "wb") as fp:
+            fp.write(self.compressed_byte_data)
+
     def show_difference(self, extrapolate=False):
         fig, ax = plt.subplots()
         ax.imshow(self.get_difference(extrapolate))
         plt.show()
 
+    def store_compressed_png(self, path):
+        plt.imsave(path, self.decompressed_image.astype(np.uint8))
 
 def main():
     image_path = "../images/lenna_32x32.png"
 
-    jpeg = EasyJpeg(image_path, 10, (4, 4, 4), 8)
+    jpeg = EasyJpeg.from_png(image_path, 10, (4, 4, 4), 8)
 
-    jpeg.get_decompressed()
+    jpeg.show_decompressed()
     print(jpeg.get_compression_ratio())
     # jpeg.show_difference()
     # jpeg.show_difference(extrapolate=True)
+    jpeg.store_compressed("test.out")
+
+    jpeg2 = EasyJpeg.from_compressed("test.out")
+    # jpeg2.show_decompressed()
+    jpeg2.store_compressed_png("d.png")
 
 
 if __name__ == "__main__":
