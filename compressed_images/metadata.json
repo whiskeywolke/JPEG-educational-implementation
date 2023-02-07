@@ -1,0 +1,1082 @@
+{
+    "lenna_32x32_10_(4, 1, 0)": {
+        "compression_ratio": 7.444444444444445,
+        "compression_time": 0.0010216236114501953,
+        "decompression_time": 0.005959510803222656,
+        "psnr": 5.306730858197088
+    },
+    "lenna_32x32_50_(4, 1, 0)": {
+        "compression_ratio": 3.200868621064061,
+        "compression_time": 0.001995086669921875,
+        "decompression_time": 0.0059697628021240234,
+        "psnr": 5.260093775139185
+    },
+    "lenna_32x32_90_(4, 1, 0)": {
+        "compression_ratio": 1.6065395095367847,
+        "compression_time": 0.00397181510925293,
+        "decompression_time": 0.0060002803802490234,
+        "psnr": 5.231514660164188
+    },
+    "lenna_32x32_100_(4, 1, 0)": {
+        "compression_ratio": 0.8831635710005992,
+        "compression_time": 0.004017829895019531,
+        "decompression_time": 0.007950544357299805,
+        "psnr": 5.2350055589667726
+    },
+    "lenna_32x32_10_(4, 1, 1)": {
+        "compression_ratio": 6.5950782997762865,
+        "compression_time": 0.000995635986328125,
+        "decompression_time": 0.005995988845825195,
+        "psnr": 5.282803150782778
+    },
+    "lenna_32x32_50_(4, 1, 1)": {
+        "compression_ratio": 2.87890625,
+        "compression_time": 0.00202178955078125,
+        "decompression_time": 0.006968498229980469,
+        "psnr": 5.271939313603716
+    },
+    "lenna_32x32_90_(4, 1, 1)": {
+        "compression_ratio": 1.4450980392156862,
+        "compression_time": 0.002991914749145508,
+        "decompression_time": 0.008977413177490234,
+        "psnr": 5.235912170695961
+    },
+    "lenna_32x32_100_(4, 1, 1)": {
+        "compression_ratio": 0.7916219119226638,
+        "compression_time": 0.004986286163330078,
+        "decompression_time": 0.007978677749633789,
+        "psnr": 5.237238609769886
+    },
+    "lenna_32x32_10_(4, 2, 0)": {
+        "compression_ratio": 6.551111111111111,
+        "compression_time": 0.001994609832763672,
+        "decompression_time": 0.005983829498291016,
+        "psnr": 5.22716613534574
+    },
+    "lenna_32x32_50_(4, 2, 0)": {
+        "compression_ratio": 2.8649173955296403,
+        "compression_time": 0.001996755599975586,
+        "decompression_time": 0.005973100662231445,
+        "psnr": 5.292466436012404
+    },
+    "lenna_32x32_90_(4, 2, 0)": {
+        "compression_ratio": 1.4262215771649733,
+        "compression_time": 0.0030193328857421875,
+        "decompression_time": 0.007964134216308594,
+        "psnr": 5.279296290637677
+    },
+    "lenna_32x32_100_(4, 2, 0)": {
+        "compression_ratio": 0.7871829105473965,
+        "compression_time": 0.004999399185180664,
+        "decompression_time": 0.007979154586791992,
+        "psnr": 5.28434053237263
+    },
+    "lenna_32x32_10_(4, 2, 2)": {
+        "compression_ratio": 5.849206349206349,
+        "compression_time": 0.0020084381103515625,
+        "decompression_time": 0.00698399543762207,
+        "psnr": 5.257473032485976
+    },
+    "lenna_32x32_50_(4, 2, 2)": {
+        "compression_ratio": 2.450540315876974,
+        "compression_time": 0.0020062923431396484,
+        "decompression_time": 0.00797724723815918,
+        "psnr": 5.294809965422117
+    },
+    "lenna_32x32_90_(4, 2, 2)": {
+        "compression_ratio": 1.2136681762041992,
+        "compression_time": 0.003020763397216797,
+        "decompression_time": 0.00897526741027832,
+        "psnr": 5.285129137223087
+    },
+    "lenna_32x32_100_(4, 2, 2)": {
+        "compression_ratio": 0.6716791979949874,
+        "compression_time": 0.005995035171508789,
+        "decompression_time": 0.010960102081298828,
+        "psnr": 5.290979476368435
+    },
+    "lenna_32x32_10_(4, 4, 4)": {
+        "compression_ratio": 4.770226537216828,
+        "compression_time": 0.0030226707458496094,
+        "decompression_time": 0.009970664978027344,
+        "psnr": 5.368388338266609
+    },
+    "lenna_32x32_50_(4, 4, 4)": {
+        "compression_ratio": 2.1012116892373487,
+        "compression_time": 0.0030035972595214844,
+        "decompression_time": 0.011950969696044922,
+        "psnr": 5.313051432241256
+    },
+    "lenna_32x32_90_(4, 4, 4)": {
+        "compression_ratio": 0.98859825620389,
+        "compression_time": 0.005003690719604492,
+        "decompression_time": 0.012964010238647461,
+        "psnr": 5.299409202177437
+    },
+    "lenna_32x32_100_(4, 4, 4)": {
+        "compression_ratio": 0.5407190022010272,
+        "compression_time": 0.007977962493896484,
+        "decompression_time": 0.017952442169189453,
+        "psnr": 5.306306098571708
+    },
+    "lenna_64x64_10_(4, 1, 0)": {
+        "compression_ratio": 11.638608305274971,
+        "compression_time": 0.005989789962768555,
+        "decompression_time": 0.01994013786315918,
+        "psnr": 5.193038184629001
+    },
+    "lenna_64x64_50_(4, 1, 0)": {
+        "compression_ratio": 4.964097654380086,
+        "compression_time": 0.006982088088989258,
+        "decompression_time": 0.021941184997558594,
+        "psnr": 5.227192491591906
+    },
+    "lenna_64x64_90_(4, 1, 0)": {
+        "compression_ratio": 2.2026338147833475,
+        "compression_time": 0.008975028991699219,
+        "decompression_time": 0.02293848991394043,
+        "psnr": 5.222666363401238
+    },
+    "lenna_64x64_100_(4, 1, 0)": {
+        "compression_ratio": 1.2108827650630547,
+        "compression_time": 0.013963699340820312,
+        "decompression_time": 0.025930166244506836,
+        "psnr": 5.222988580701184
+    },
+    "lenna_64x64_10_(4, 1, 1)": {
+        "compression_ratio": 10.712809917355372,
+        "compression_time": 0.005984067916870117,
+        "decompression_time": 0.022938013076782227,
+        "psnr": 5.209811026976223
+    },
+    "lenna_64x64_50_(4, 1, 1)": {
+        "compression_ratio": 4.407139821504463,
+        "compression_time": 0.007978200912475586,
+        "decompression_time": 0.02393651008605957,
+        "psnr": 5.212318224446458
+    },
+    "lenna_64x64_90_(4, 1, 1)": {
+        "compression_ratio": 1.968862730206949,
+        "compression_time": 0.00997304916381836,
+        "decompression_time": 0.027925491333007812,
+        "psnr": 5.22353965196246
+    },
+    "lenna_64x64_100_(4, 1, 1)": {
+        "compression_ratio": 1.0613038583563608,
+        "compression_time": 0.015956640243530273,
+        "decompression_time": 0.03091740608215332,
+        "psnr": 5.22445105017505
+    },
+    "lenna_64x64_10_(4, 2, 0)": {
+        "compression_ratio": 10.474747474747474,
+        "compression_time": 0.004987001419067383,
+        "decompression_time": 0.02991962432861328,
+        "psnr": 5.290442436877036
+    },
+    "lenna_64x64_50_(4, 2, 0)": {
+        "compression_ratio": 4.502822405557968,
+        "compression_time": 0.006981372833251953,
+        "decompression_time": 0.023935794830322266,
+        "psnr": 5.241270965622867
+    },
+    "lenna_64x64_90_(4, 2, 0)": {
+        "compression_ratio": 1.943767572633552,
+        "compression_time": 0.010971307754516602,
+        "decompression_time": 0.02692723274230957,
+        "psnr": 5.245113598891708
+    },
+    "lenna_64x64_100_(4, 2, 0)": {
+        "compression_ratio": 1.069513201320132,
+        "compression_time": 0.014959573745727539,
+        "decompression_time": 0.030918598175048828,
+        "psnr": 5.248511545832444
+    },
+    "lenna_64x64_10_(4, 2, 2)": {
+        "compression_ratio": 9.470319634703197,
+        "compression_time": 0.007978439331054688,
+        "decompression_time": 0.030916929244995117,
+        "psnr": 5.2661771208487265
+    },
+    "lenna_64x64_50_(4, 2, 2)": {
+        "compression_ratio": 3.9161631419939575,
+        "compression_time": 0.00897669792175293,
+        "decompression_time": 0.03091716766357422,
+        "psnr": 5.244694388795974
+    },
+    "lenna_64x64_90_(4, 2, 2)": {
+        "compression_ratio": 1.6634584536413217,
+        "compression_time": 0.012965202331542969,
+        "decompression_time": 0.03390932083129883,
+        "psnr": 5.248481742298518
+    },
+    "lenna_64x64_100_(4, 2, 2)": {
+        "compression_ratio": 0.8899759697905939,
+        "compression_time": 0.01994633674621582,
+        "decompression_time": 0.04190516471862793,
+        "psnr": 5.250293915178954
+    },
+    "lenna_64x64_10_(4, 4, 4)": {
+        "compression_ratio": 8.465306122448979,
+        "compression_time": 0.009998083114624023,
+        "decompression_time": 0.041878700256347656,
+        "psnr": 5.241288575314492
+    },
+    "lenna_64x64_50_(4, 4, 4)": {
+        "compression_ratio": 3.240625,
+        "compression_time": 0.011964082717895508,
+        "decompression_time": 0.04488825798034668,
+        "psnr": 5.251200705155867
+    },
+    "lenna_64x64_90_(4, 4, 4)": {
+        "compression_ratio": 1.3601783840503672,
+        "compression_time": 0.01897573471069336,
+        "decompression_time": 0.0528566837310791,
+        "psnr": 5.257001610348608
+    },
+    "lenna_64x64_100_(4, 4, 4)": {
+        "compression_ratio": 0.6961133114049809,
+        "compression_time": 0.02888965606689453,
+        "decompression_time": 0.0598599910736084,
+        "psnr": 5.258914744202584
+    },
+    "lenna_128x128_10_(4, 1, 0)": {
+        "compression_ratio": 18.361954459203037,
+        "compression_time": 0.016983509063720703,
+        "decompression_time": 0.06978273391723633,
+        "psnr": 5.230998817353408
+    },
+    "lenna_128x128_50_(4, 1, 0)": {
+        "compression_ratio": 7.478168469860896,
+        "compression_time": 0.018967151641845703,
+        "decompression_time": 0.07579588890075684,
+        "psnr": 5.2046466557330024
+    },
+    "lenna_128x128_90_(4, 1, 0)": {
+        "compression_ratio": 3.1939103886459277,
+        "compression_time": 0.028921842575073242,
+        "decompression_time": 0.08578753471374512,
+        "psnr": 5.20691968692638
+    },
+    "lenna_128x128_100_(4, 1, 0)": {
+        "compression_ratio": 1.6023098894730305,
+        "compression_time": 0.04090166091918945,
+        "decompression_time": 0.09174323081970215,
+        "psnr": 5.208073197353038
+    },
+    "lenna_128x128_10_(4, 1, 1)": {
+        "compression_ratio": 16.669681309216195,
+        "compression_time": 0.021938085556030273,
+        "decompression_time": 0.08280467987060547,
+        "psnr": 5.219875380056865
+    },
+    "lenna_128x128_50_(4, 1, 1)": {
+        "compression_ratio": 6.67247026374763,
+        "compression_time": 0.022927522659301758,
+        "decompression_time": 0.08676910400390625,
+        "psnr": 5.209843296240026
+    },
+    "lenna_128x128_90_(4, 1, 1)": {
+        "compression_ratio": 2.8130087209302324,
+        "compression_time": 0.03591752052307129,
+        "decompression_time": 0.10071730613708496,
+        "psnr": 5.208777792762183
+    },
+    "lenna_128x128_100_(4, 1, 1)": {
+        "compression_ratio": 1.4018180501231348,
+        "compression_time": 0.0498659610748291,
+        "decompression_time": 0.11270689964294434,
+        "psnr": 5.209483674590487
+    },
+    "lenna_128x128_10_(4, 2, 0)": {
+        "compression_ratio": 17.233748886910064,
+        "compression_time": 0.022932767868041992,
+        "decompression_time": 0.08478236198425293,
+        "psnr": 5.227971641575881
+    },
+    "lenna_128x128_50_(4, 2, 0)": {
+        "compression_ratio": 6.660987781793151,
+        "compression_time": 0.0239260196685791,
+        "decompression_time": 0.08778071403503418,
+        "psnr": 5.219127760214995
+    },
+    "lenna_128x128_90_(4, 2, 0)": {
+        "compression_ratio": 2.810965867828613,
+        "compression_time": 0.03291130065917969,
+        "decompression_time": 0.09975051879882812,
+        "psnr": 5.218034653612914
+    },
+    "lenna_128x128_100_(4, 2, 0)": {
+        "compression_ratio": 1.397112434578596,
+        "compression_time": 0.0498507022857666,
+        "decompression_time": 0.11369609832763672,
+        "psnr": 5.2198067632510075
+    },
+    "lenna_128x128_10_(4, 2, 2)": {
+        "compression_ratio": 14.939019683519877,
+        "compression_time": 0.025929927825927734,
+        "decompression_time": 0.10973095893859863,
+        "psnr": 5.22696778715922
+    },
+    "lenna_128x128_50_(4, 2, 2)": {
+        "compression_ratio": 5.82585791691752,
+        "compression_time": 0.028933048248291016,
+        "decompression_time": 0.1206507682800293,
+        "psnr": 5.219117176027403
+    },
+    "lenna_128x128_90_(4, 2, 2)": {
+        "compression_ratio": 2.394494277760594,
+        "compression_time": 0.04388236999511719,
+        "decompression_time": 0.13365936279296875,
+        "psnr": 5.219476479479201
+    },
+    "lenna_128x128_100_(4, 2, 2)": {
+        "compression_ratio": 1.1433170875793826,
+        "compression_time": 0.06682133674621582,
+        "decompression_time": 0.15558362007141113,
+        "psnr": 5.221293577328297
+    },
+    "lenna_128x128_10_(4, 4, 4)": {
+        "compression_ratio": 12.559052563270603,
+        "compression_time": 0.03887820243835449,
+        "decompression_time": 0.17453312873840332,
+        "psnr": 5.224774529701476
+    },
+    "lenna_128x128_50_(4, 4, 4)": {
+        "compression_ratio": 4.8426122857500316,
+        "compression_time": 0.04288530349731445,
+        "decompression_time": 0.176527738571167,
+        "psnr": 5.222801456825785
+    },
+    "lenna_128x128_90_(4, 4, 4)": {
+        "compression_ratio": 1.9634270061884955,
+        "compression_time": 0.05884194374084473,
+        "decompression_time": 0.19148898124694824,
+        "psnr": 5.225043501278824
+    },
+    "lenna_128x128_100_(4, 4, 4)": {
+        "compression_ratio": 0.8740628669496884,
+        "compression_time": 0.0937342643737793,
+        "decompression_time": 0.23038387298583984,
+        "psnr": 5.227084099135015
+    },
+    "lenna_256x256_10_(4, 1, 0)": {
+        "compression_ratio": 26.66175438596491,
+        "compression_time": 0.07881331443786621,
+        "decompression_time": 0.3021700382232666,
+        "psnr": 5.203544223781326
+    },
+    "lenna_256x256_50_(4, 1, 0)": {
+        "compression_ratio": 10.996526772793054,
+        "compression_time": 0.07878851890563965,
+        "decompression_time": 0.29921627044677734,
+        "psnr": 5.196587534646753
+    },
+    "lenna_256x256_90_(4, 1, 0)": {
+        "compression_ratio": 4.491031058837436,
+        "compression_time": 0.0967414379119873,
+        "decompression_time": 0.32712578773498535,
+        "psnr": 5.193680113568918
+    },
+    "lenna_256x256_100_(4, 1, 0)": {
+        "compression_ratio": 2.0007899310126915,
+        "compression_time": 0.16356825828552246,
+        "decompression_time": 0.3949413299560547,
+        "psnr": 5.193838683488598
+    },
+    "lenna_256x256_10_(4, 1, 1)": {
+        "compression_ratio": 24.038595381208477,
+        "compression_time": 0.0827798843383789,
+        "decompression_time": 0.3480844497680664,
+        "psnr": 5.202209864585062
+    },
+    "lenna_256x256_50_(4, 1, 1)": {
+        "compression_ratio": 9.748043617703656,
+        "compression_time": 0.08577990531921387,
+        "decompression_time": 0.35804104804992676,
+        "psnr": 5.197195379773634
+    },
+    "lenna_256x256_90_(4, 1, 1)": {
+        "compression_ratio": 3.9655559324687526,
+        "compression_time": 0.11370730400085449,
+        "decompression_time": 0.3829681873321533,
+        "psnr": 5.194746625954564
+    },
+    "lenna_256x256_100_(4, 1, 1)": {
+        "compression_ratio": 1.7322299730998951,
+        "compression_time": 0.17853379249572754,
+        "decompression_time": 0.4368267059326172,
+        "psnr": 5.194922823278338
+    },
+    "lenna_256x256_10_(4, 2, 0)": {
+        "compression_ratio": 24.539318585499757,
+        "compression_time": 0.07181906700134277,
+        "decompression_time": 0.341076135635376,
+        "psnr": 5.199805169192416
+    },
+    "lenna_256x256_50_(4, 2, 0)": {
+        "compression_ratio": 9.998157894736842,
+        "compression_time": 0.08179092407226562,
+        "decompression_time": 0.34805822372436523,
+        "psnr": 5.200046059128964
+    },
+    "lenna_256x256_90_(4, 2, 0)": {
+        "compression_ratio": 4.023616626952608,
+        "compression_time": 0.1136782169342041,
+        "decompression_time": 0.370011568069458,
+        "psnr": 5.199626252890521
+    },
+    "lenna_256x256_100_(4, 2, 0)": {
+        "compression_ratio": 1.7280935161811193,
+        "compression_time": 0.18351984024047852,
+        "decompression_time": 0.4408094882965088,
+        "psnr": 5.199565979516052
+    },
+    "lenna_256x256_10_(4, 2, 2)": {
+        "compression_ratio": 20.84378000274311,
+        "compression_time": 0.09475874900817871,
+        "decompression_time": 0.4398329257965088,
+        "psnr": 5.197417407209031
+    },
+    "lenna_256x256_50_(4, 2, 2)": {
+        "compression_ratio": 8.450870266362676,
+        "compression_time": 0.10672950744628906,
+        "decompression_time": 0.46173715591430664,
+        "psnr": 5.202258440983528
+    },
+    "lenna_256x256_90_(4, 2, 2)": {
+        "compression_ratio": 3.3476220895653896,
+        "compression_time": 0.1465919017791748,
+        "decompression_time": 0.4866981506347656,
+        "psnr": 5.2003986517419065
+    },
+    "lenna_256x256_100_(4, 2, 2)": {
+        "compression_ratio": 1.3966217582296396,
+        "compression_time": 0.24138545989990234,
+        "decompression_time": 0.5794186592102051,
+        "psnr": 5.200730851181941
+    },
+    "lenna_256x256_10_(4, 4, 4)": {
+        "compression_ratio": 16.97252624525352,
+        "compression_time": 0.1505587100982666,
+        "decompression_time": 0.6971218585968018,
+        "psnr": 5.206172314895339
+    },
+    "lenna_256x256_50_(4, 4, 4)": {
+        "compression_ratio": 6.822536475869809,
+        "compression_time": 0.15459632873535156,
+        "decompression_time": 0.668182373046875,
+        "psnr": 5.205285539787965
+    },
+    "lenna_256x256_90_(4, 4, 4)": {
+        "compression_ratio": 2.694682341259287,
+        "compression_time": 0.20348358154296875,
+        "decompression_time": 0.7280244827270508,
+        "psnr": 5.203866322939329
+    },
+    "lenna_256x256_100_(4, 4, 4)": {
+        "compression_ratio": 1.0364601093939683,
+        "compression_time": 0.3560757637023926,
+        "decompression_time": 0.9057981967926025,
+        "psnr": 5.203990663010053
+    },
+    "lenna_512x512_10_(4, 1, 0)": {
+        "compression_ratio": 29.110462615961172,
+        "compression_time": 0.24236178398132324,
+        "decompression_time": 1.158872365951538,
+        "psnr": 5.191605495626997
+    },
+    "lenna_512x512_50_(4, 1, 0)": {
+        "compression_ratio": 11.5794477028348,
+        "compression_time": 0.2933061122894287,
+        "decompression_time": 1.1659088134765625,
+        "psnr": 5.198806756169974
+    },
+    "lenna_512x512_90_(4, 1, 0)": {
+        "compression_ratio": 4.417675138451211,
+        "compression_time": 0.37002134323120117,
+        "decompression_time": 1.260612964630127,
+        "psnr": 5.194664011693494
+    },
+    "lenna_512x512_100_(4, 1, 0)": {
+        "compression_ratio": 1.7938291468700902,
+        "compression_time": 0.6053519248962402,
+        "decompression_time": 1.4471590518951416,
+        "psnr": 5.1941733385711855
+    },
+    "lenna_512x512_10_(4, 1, 1)": {
+        "compression_ratio": 25.68328906715811,
+        "compression_time": 0.28624439239501953,
+        "decompression_time": 1.3114886283874512,
+        "psnr": 5.187713574887177
+    },
+    "lenna_512x512_50_(4, 1, 1)": {
+        "compression_ratio": 10.051783024671716,
+        "compression_time": 0.3241152763366699,
+        "decompression_time": 1.3523542881011963,
+        "psnr": 5.196846800382259
+    },
+    "lenna_512x512_90_(4, 1, 1)": {
+        "compression_ratio": 3.826927270524573,
+        "compression_time": 0.4508030414581299,
+        "decompression_time": 1.5080130100250244,
+        "psnr": 5.195516036738025
+    },
+    "lenna_512x512_100_(4, 1, 1)": {
+        "compression_ratio": 1.5348592381921071,
+        "compression_time": 0.7490077018737793,
+        "decompression_time": 1.703415870666504,
+        "psnr": 5.194830017881989
+    },
+    "lenna_512x512_10_(4, 2, 0)": {
+        "compression_ratio": 26.381103502032182,
+        "compression_time": 0.28922557830810547,
+        "decompression_time": 1.3095262050628662,
+        "psnr": 5.197739939973973
+    },
+    "lenna_512x512_50_(4, 2, 0)": {
+        "compression_ratio": 10.405406592441311,
+        "compression_time": 0.3221402168273926,
+        "decompression_time": 1.3932514190673828,
+        "psnr": 5.20149198066897
+    },
+    "lenna_512x512_90_(4, 2, 0)": {
+        "compression_ratio": 3.8864409977115955,
+        "compression_time": 0.4368417263031006,
+        "decompression_time": 1.454127311706543,
+        "psnr": 5.1990043986478
+    },
+    "lenna_512x512_100_(4, 2, 0)": {
+        "compression_ratio": 1.5371995471105588,
+        "compression_time": 0.720085859298706,
+        "decompression_time": 1.7014451026916504,
+        "psnr": 5.198155545534934
+    },
+    "lenna_512x512_10_(4, 2, 2)": {
+        "compression_ratio": 21.875854108956602,
+        "compression_time": 0.38497066497802734,
+        "decompression_time": 1.7443609237670898,
+        "psnr": 5.19196123405192
+    },
+    "lenna_512x512_50_(4, 2, 2)": {
+        "compression_ratio": 8.546118606161171,
+        "compression_time": 0.47176623344421387,
+        "decompression_time": 1.800201177597046,
+        "psnr": 5.200853845493432
+    },
+    "lenna_512x512_90_(4, 2, 2)": {
+        "compression_ratio": 3.1197927297388053,
+        "compression_time": 0.5455520153045654,
+        "decompression_time": 1.9128501415252686,
+        "psnr": 5.199694687115222
+    },
+    "lenna_512x512_100_(4, 2, 2)": {
+        "compression_ratio": 1.2095887718295046,
+        "compression_time": 0.9135706424713135,
+        "decompression_time": 2.309793472290039,
+        "psnr": 5.1989137068643565
+    },
+    "lenna_512x512_10_(4, 4, 4)": {
+        "compression_ratio": 17.331053401609363,
+        "compression_time": 0.5754721164703369,
+        "decompression_time": 2.5780951976776123,
+        "psnr": 5.196625587764544
+    },
+    "lenna_512x512_50_(4, 4, 4)": {
+        "compression_ratio": 6.693379101863231,
+        "compression_time": 0.6183598041534424,
+        "decompression_time": 2.700747013092041,
+        "psnr": 5.20344103293475
+    },
+    "lenna_512x512_90_(4, 4, 4)": {
+        "compression_ratio": 2.33429234384468,
+        "compression_time": 0.8038613796234131,
+        "decompression_time": 2.8274362087249756,
+        "psnr": 5.2009048203552
+    },
+    "lenna_512x512_100_(4, 4, 4)": {
+        "compression_ratio": 0.8579527450699915,
+        "compression_time": 1.357367753982544,
+        "decompression_time": 3.4079113006591797,
+        "psnr": 5.199974981058806
+    },
+    "Barns_grand_tetons_1600x1195_10_(4, 1, 0)": {
+        "compression_ratio": 23.482869239233825,
+        "compression_time": 1.91786789894104,
+        "decompression_time": 8.100302457809448,
+        "psnr": 5.703778921896441
+    },
+    "Barns_grand_tetons_1600x1195_50_(4, 1, 0)": {
+        "compression_ratio": 9.394257361719061,
+        "compression_time": 2.414512872695923,
+        "decompression_time": 8.691533327102661,
+        "psnr": 5.706726818132437
+    },
+    "Barns_grand_tetons_1600x1195_90_(4, 1, 0)": {
+        "compression_ratio": 4.155858316022956,
+        "compression_time": 3.708052396774292,
+        "decompression_time": 9.559832096099854,
+        "psnr": 5.6958519809732095
+    },
+    "Barns_grand_tetons_1600x1195_100_(4, 1, 0)": {
+        "compression_ratio": 2.399931761692005,
+        "compression_time": 5.829406499862671,
+        "decompression_time": 10.07105803489685,
+        "psnr": 5.69570712634114
+    },
+    "Barns_grand_tetons_1600x1195_10_(4, 1, 1)": {
+        "compression_ratio": 21.903409683966366,
+        "compression_time": 2.250950574874878,
+        "decompression_time": 9.663177728652954,
+        "psnr": 5.707363040262092
+    },
+    "Barns_grand_tetons_1600x1195_50_(4, 1, 1)": {
+        "compression_ratio": 8.674005148495754,
+        "compression_time": 2.6927967071533203,
+        "decompression_time": 10.074036836624146,
+        "psnr": 5.7067928788151985
+    },
+    "Barns_grand_tetons_1600x1195_90_(4, 1, 1)": {
+        "compression_ratio": 3.7934028963384017,
+        "compression_time": 4.0830724239349365,
+        "decompression_time": 10.899843215942383,
+        "psnr": 5.696120454149015
+    },
+    "Barns_grand_tetons_1600x1195_100_(4, 1, 1)": {
+        "compression_ratio": 2.162566813691139,
+        "compression_time": 6.4377806186676025,
+        "decompression_time": 11.87424612045288,
+        "psnr": 5.6960491031613465
+    },
+    "Barns_grand_tetons_1600x1195_10_(4, 2, 0)": {
+        "compression_ratio": 21.94272718294886,
+        "compression_time": 2.3155529499053955,
+        "decompression_time": 9.605277299880981,
+        "psnr": 5.702847803965971
+    },
+    "Barns_grand_tetons_1600x1195_50_(4, 2, 0)": {
+        "compression_ratio": 8.709847235833285,
+        "compression_time": 2.7596168518066406,
+        "decompression_time": 10.028169631958008,
+        "psnr": 5.7064806895863684
+    },
+    "Barns_grand_tetons_1600x1195_90_(4, 2, 0)": {
+        "compression_ratio": 3.8179384054638392,
+        "compression_time": 4.140894174575806,
+        "decompression_time": 10.869950771331787,
+        "psnr": 5.696125812882814
+    },
+    "Barns_grand_tetons_1600x1195_100_(4, 2, 0)": {
+        "compression_ratio": 2.1167654184139457,
+        "compression_time": 6.528535842895508,
+        "decompression_time": 11.983901739120483,
+        "psnr": 5.696084821438568
+    },
+    "Barns_grand_tetons_1600x1195_10_(4, 2, 2)": {
+        "compression_ratio": 19.55337619580072,
+        "compression_time": 2.959115982055664,
+        "decompression_time": 12.797388315200806,
+        "psnr": 5.705763202825784
+    },
+    "Barns_grand_tetons_1600x1195_50_(4, 2, 2)": {
+        "compression_ratio": 7.63014653302144,
+        "compression_time": 3.5026299953460693,
+        "decompression_time": 13.157830238342285,
+        "psnr": 5.706957584373554
+    },
+    "Barns_grand_tetons_1600x1195_90_(4, 2, 2)": {
+        "compression_ratio": 3.3318805257628563,
+        "compression_time": 5.026537895202637,
+        "decompression_time": 14.20100998878479,
+        "psnr": 5.6962163192508095
+    },
+    "Barns_grand_tetons_1600x1195_100_(4, 2, 2)": {
+        "compression_ratio": 1.82025280465708,
+        "compression_time": 7.75725245475769,
+        "decompression_time": 15.588292121887207,
+        "psnr": 5.696269385813979
+    },
+    "Barns_grand_tetons_1600x1195_10_(4, 4, 4)": {
+        "compression_ratio": 16.206613520517617,
+        "compression_time": 4.321439504623413,
+        "decompression_time": 19.048049211502075,
+        "psnr": 5.705175412639837
+    },
+    "Barns_grand_tetons_1600x1195_50_(4, 4, 4)": {
+        "compression_ratio": 6.061219675792946,
+        "compression_time": 5.040544748306274,
+        "decompression_time": 20.0673189163208,
+        "psnr": 5.705398026817544
+    },
+    "Barns_grand_tetons_1600x1195_90_(4, 4, 4)": {
+        "compression_ratio": 3.0286682654953685,
+        "compression_time": 6.519589185714722,
+        "decompression_time": 20.547035932540894,
+        "psnr": 5.695921000273325
+    },
+    "Barns_grand_tetons_1600x1195_100_(4, 4, 4)": {
+        "compression_ratio": 1.5649959810737577,
+        "compression_time": 10.199513912200928,
+        "decompression_time": 22.258397102355957,
+        "psnr": 5.695642507031992
+    },
+    "christmas_tree_194x129_10_(4, 1, 0)": {
+        "compression_ratio": 14.648047229791098,
+        "compression_time": 0.02993011474609375,
+        "decompression_time": 0.11966919898986816,
+        "psnr": 7.868830420894205
+    },
+    "christmas_tree_194x129_50_(4, 1, 0)": {
+        "compression_ratio": 6.269802701914666,
+        "compression_time": 0.036902666091918945,
+        "decompression_time": 0.1306445598602295,
+        "psnr": 7.8551143522404985
+    },
+    "christmas_tree_194x129_90_(4, 1, 0)": {
+        "compression_ratio": 2.6998409642588097,
+        "compression_time": 0.053867340087890625,
+        "decompression_time": 0.14360594749450684,
+        "psnr": 7.84159025664935
+    },
+    "christmas_tree_194x129_100_(4, 1, 0)": {
+        "compression_ratio": 1.491457239960234,
+        "compression_time": 0.0857996940612793,
+        "decompression_time": 0.16055679321289062,
+        "psnr": 7.845042002393562
+    },
+    "christmas_tree_194x129_10_(4, 1, 1)": {
+        "compression_ratio": 13.157250662859473,
+        "compression_time": 0.03587508201599121,
+        "decompression_time": 0.14363312721252441,
+        "psnr": 7.852268232679203
+    },
+    "christmas_tree_194x129_50_(4, 1, 1)": {
+        "compression_ratio": 5.656787092248334,
+        "compression_time": 0.043882131576538086,
+        "decompression_time": 0.1545860767364502,
+        "psnr": 7.843091499514255
+    },
+    "christmas_tree_194x129_90_(4, 1, 1)": {
+        "compression_ratio": 2.4287489175859345,
+        "compression_time": 0.06283187866210938,
+        "decompression_time": 0.1675407886505127,
+        "psnr": 7.8416854191911325
+    },
+    "christmas_tree_194x129_100_(4, 1, 1)": {
+        "compression_ratio": 1.3122991171325116,
+        "compression_time": 0.10070347785949707,
+        "decompression_time": 0.20348310470581055,
+        "psnr": 7.84481944816733
+    },
+    "christmas_tree_194x129_10_(4, 2, 0)": {
+        "compression_ratio": 13.369948186528497,
+        "compression_time": 0.03591656684875488,
+        "decompression_time": 0.14261603355407715,
+        "psnr": 7.866157671557499
+    },
+    "christmas_tree_194x129_50_(4, 2, 0)": {
+        "compression_ratio": 5.687709398695116,
+        "compression_time": 0.04288482666015625,
+        "decompression_time": 0.16353559494018555,
+        "psnr": 7.8540091460202
+    },
+    "christmas_tree_194x129_90_(4, 2, 0)": {
+        "compression_ratio": 2.434155912761301,
+        "compression_time": 0.06583380699157715,
+        "decompression_time": 0.1675405502319336,
+        "psnr": 7.8432254183118335
+    },
+    "christmas_tree_194x129_100_(4, 2, 0)": {
+        "compression_ratio": 1.3155640753731952,
+        "compression_time": 0.09574437141418457,
+        "decompression_time": 0.20113873481750488,
+        "psnr": 7.84678374232271
+    },
+    "christmas_tree_194x129_10_(4, 2, 2)": {
+        "compression_ratio": 11.612961296129614,
+        "compression_time": 0.04794669151306152,
+        "decompression_time": 0.1984865665435791,
+        "psnr": 7.8637733338034534
+    },
+    "christmas_tree_194x129_50_(4, 2, 2)": {
+        "compression_ratio": 4.884530930567124,
+        "compression_time": 0.06085085868835449,
+        "decompression_time": 0.2134716510772705,
+        "psnr": 7.848381397704307
+    },
+    "christmas_tree_194x129_90_(4, 2, 2)": {
+        "compression_ratio": 2.0860820075022635,
+        "compression_time": 0.08776092529296875,
+        "decompression_time": 0.2313852310180664,
+        "psnr": 7.843554662755814
+    },
+    "christmas_tree_194x129_100_(4, 2, 2)": {
+        "compression_ratio": 1.0900273731877936,
+        "compression_time": 0.1296529769897461,
+        "decompression_time": 0.25905537605285645,
+        "psnr": 7.847006918935474
+    },
+    "christmas_tree_194x129_10_(4, 4, 4)": {
+        "compression_ratio": 9.681825003752063,
+        "compression_time": 0.06298136711120605,
+        "decompression_time": 0.28321337699890137,
+        "psnr": 7.864017040176016
+    },
+    "christmas_tree_194x129_50_(4, 4, 4)": {
+        "compression_ratio": 3.9678927297330544,
+        "compression_time": 0.07581400871276855,
+        "decompression_time": 0.28821253776550293,
+        "psnr": 7.8480506338892875
+    },
+    "christmas_tree_194x129_90_(4, 4, 4)": {
+        "compression_ratio": 1.7054857898215465,
+        "compression_time": 0.10674166679382324,
+        "decompression_time": 0.3081703186035156,
+        "psnr": 7.842160908855953
+    },
+    "christmas_tree_194x129_100_(4, 4, 4)": {
+        "compression_ratio": 0.8506850579562987,
+        "compression_time": 0.16655445098876953,
+        "decompression_time": 0.35503387451171875,
+        "psnr": 7.845373268365131
+    },
+    "christmas_tree_600x400_10_(4, 1, 0)": {
+        "compression_ratio": 23.54525166191833,
+        "compression_time": 0.23836088180541992,
+        "decompression_time": 1.021285057067871,
+        "psnr": 7.763509511518233
+    },
+    "christmas_tree_600x400_50_(4, 1, 0)": {
+        "compression_ratio": 10.12812761698564,
+        "compression_time": 0.2682938575744629,
+        "decompression_time": 1.0502076148986816,
+        "psnr": 7.753702990387584
+    },
+    "christmas_tree_600x400_90_(4, 1, 0)": {
+        "compression_ratio": 4.611049117521248,
+        "compression_time": 0.34208178520202637,
+        "decompression_time": 1.1499264240264893,
+        "psnr": 7.7492632037982965
+    },
+    "christmas_tree_600x400_100_(4, 1, 0)": {
+        "compression_ratio": 2.1495242430153674,
+        "compression_time": 0.6113896369934082,
+        "decompression_time": 1.2995119094848633,
+        "psnr": 7.749942645363577
+    },
+    "christmas_tree_600x400_10_(4, 1, 1)": {
+        "compression_ratio": 20.97736695151874,
+        "compression_time": 0.27527451515197754,
+        "decompression_time": 1.2276885509490967,
+        "psnr": 7.762630612929685
+    },
+    "christmas_tree_600x400_50_(4, 1, 1)": {
+        "compression_ratio": 8.894244049434091,
+        "compression_time": 0.3131897449493408,
+        "decompression_time": 1.2496294975280762,
+        "psnr": 7.750890565274451
+    },
+    "christmas_tree_600x400_90_(4, 1, 1)": {
+        "compression_ratio": 4.043800918261664,
+        "compression_time": 0.38994669914245605,
+        "decompression_time": 1.348421335220337,
+        "psnr": 7.749471749776435
+    },
+    "christmas_tree_600x400_100_(4, 1, 1)": {
+        "compression_ratio": 1.8691215717021246,
+        "compression_time": 0.6901535987854004,
+        "decompression_time": 1.5807883739471436,
+        "psnr": 7.750016887004811
+    },
+    "christmas_tree_600x400_10_(4, 2, 0)": {
+        "compression_ratio": 21.42789853506763,
+        "compression_time": 0.2862513065338135,
+        "decompression_time": 1.230713129043579,
+        "psnr": 7.754310461182564
+    },
+    "christmas_tree_600x400_50_(4, 2, 0)": {
+        "compression_ratio": 9.0908974241452,
+        "compression_time": 0.3121955394744873,
+        "decompression_time": 1.261596918106079,
+        "psnr": 7.751968028726944
+    },
+    "christmas_tree_600x400_90_(4, 2, 0)": {
+        "compression_ratio": 4.082285723694501,
+        "compression_time": 0.3939170837402344,
+        "decompression_time": 1.3354272842407227,
+        "psnr": 7.746986335402911
+    },
+    "christmas_tree_600x400_100_(4, 2, 0)": {
+        "compression_ratio": 1.8577910156981754,
+        "compression_time": 0.7091929912567139,
+        "decompression_time": 1.543858289718628,
+        "psnr": 7.747450647519111
+    },
+    "christmas_tree_600x400_10_(4, 2, 2)": {
+        "compression_ratio": 18.175463675683602,
+        "compression_time": 0.37998414039611816,
+        "decompression_time": 1.6037108898162842,
+        "psnr": 7.751328615957713
+    },
+    "christmas_tree_600x400_50_(4, 2, 2)": {
+        "compression_ratio": 7.560731275920956,
+        "compression_time": 0.41092896461486816,
+        "decompression_time": 1.660557746887207,
+        "psnr": 7.750971883003083
+    },
+    "christmas_tree_600x400_90_(4, 2, 2)": {
+        "compression_ratio": 3.3735389765011634,
+        "compression_time": 0.5166192054748535,
+        "decompression_time": 1.8230960369110107,
+        "psnr": 7.747251535190816
+    },
+    "christmas_tree_600x400_100_(4, 2, 2)": {
+        "compression_ratio": 1.5162105057164086,
+        "compression_time": 0.8457489013671875,
+        "decompression_time": 2.009596347808838,
+        "psnr": 7.747467476749844
+    },
+    "christmas_tree_600x400_10_(4, 4, 4)": {
+        "compression_ratio": 15.446964269025887,
+        "compression_time": 0.5265617370605469,
+        "decompression_time": 2.423534870147705,
+        "psnr": 7.749247609884977
+    },
+    "christmas_tree_600x400_50_(4, 4, 4)": {
+        "compression_ratio": 6.176361416969757,
+        "compression_time": 0.6133592128753662,
+        "decompression_time": 2.4693944454193115,
+        "psnr": 7.747141554281228
+    },
+    "christmas_tree_600x400_90_(4, 4, 4)": {
+        "compression_ratio": 2.717534033364754,
+        "compression_time": 0.7080888748168945,
+        "decompression_time": 2.5800979137420654,
+        "psnr": 7.745655211816561
+    },
+    "christmas_tree_600x400_100_(4, 4, 4)": {
+        "compression_ratio": 1.1767205987745435,
+        "compression_time": 1.1648669242858887,
+        "decompression_time": 2.9371888637542725,
+        "psnr": 7.745812567958507
+    },
+    "christmas_tree_6000x4000_10_(4, 1, 0)": {
+        "compression_ratio": 22.38497331264301,
+        "compression_time": 23.102170705795288,
+        "decompression_time": 99.77407002449036,
+        "psnr": 7.717559714384379
+    },
+    "christmas_tree_6000x4000_50_(4, 1, 0)": {
+        "compression_ratio": 10.027058200983253,
+        "compression_time": 26.78653073310852,
+        "decompression_time": 100.43830609321594,
+        "psnr": 7.718152313826792
+    },
+    "christmas_tree_6000x4000_90_(4, 1, 0)": {
+        "compression_ratio": 4.391773898993551,
+        "compression_time": 43.699129819869995,
+        "decompression_time": 103.22882747650146,
+        "psnr": 7.717975454384563
+    },
+    "christmas_tree_6000x4000_100_(4, 1, 0)": {
+        "compression_ratio": 2.2270729424174767,
+        "compression_time": 116.60679411888123,
+        "decompression_time": 110.0223286151886,
+        "psnr": 7.717944089984367
+    },
+    "christmas_tree_6000x4000_10_(4, 1, 1)": {
+        "compression_ratio": 19.727451610752084,
+        "compression_time": 26.945944786071777,
+        "decompression_time": 118.80422306060791,
+        "psnr": 7.717743968081237
+    },
+    "christmas_tree_6000x4000_50_(4, 1, 1)": {
+        "compression_ratio": 8.705464581917779,
+        "compression_time": 32.89935326576233,
+        "decompression_time": 120.60864448547363,
+        "psnr": 7.7181874433196445
+    },
+    "christmas_tree_6000x4000_90_(4, 1, 1)": {
+        "compression_ratio": 3.8766160548439155,
+        "compression_time": 54.824368715286255,
+        "decompression_time": 126.48564791679382,
+        "psnr": 7.71792125242585
+    },
+    "christmas_tree_6000x4000_100_(4, 1, 1)": {
+        "compression_ratio": 1.9272213454442457,
+        "compression_time": 128.37944650650024,
+        "decompression_time": 132.8427164554596,
+        "psnr": 7.717890589304553
+    },
+    "christmas_tree_6000x4000_10_(4, 2, 0)": {
+        "compression_ratio": 20.368772242450028,
+        "compression_time": 27.328893423080444,
+        "decompression_time": 118.91058850288391,
+        "psnr": 7.716667907274717
+    },
+    "christmas_tree_6000x4000_50_(4, 2, 0)": {
+        "compression_ratio": 9.040271511374396,
+        "compression_time": 31.7810001373291,
+        "decompression_time": 120.60793447494507,
+        "psnr": 7.717067695092364
+    },
+    "christmas_tree_6000x4000_90_(4, 2, 0)": {
+        "compression_ratio": 4.095081564834932,
+        "compression_time": 53.14983153343201,
+        "decompression_time": 122.89128494262695,
+        "psnr": 7.717172331592613
+    },
+    "christmas_tree_6000x4000_100_(4, 2, 0)": {
+        "compression_ratio": 2.0250478331264232,
+        "compression_time": 123.47170400619507,
+        "decompression_time": 130.14186120033264,
+        "psnr": 7.717131330521721
+    },
+    "christmas_tree_6000x4000_10_(4, 2, 2)": {
+        "compression_ratio": 16.935189947828643,
+        "compression_time": 35.840123891830444,
+        "decompression_time": 155.87502241134644,
+        "psnr": 7.717247273625164
+    },
+    "christmas_tree_6000x4000_50_(4, 2, 2)": {
+        "compression_ratio": 7.443661707356644,
+        "compression_time": 40.77193307876587,
+        "decompression_time": 158.1569185256958,
+        "psnr": 7.71708158169341
+    },
+    "christmas_tree_6000x4000_90_(4, 2, 2)": {
+        "compression_ratio": 3.453364479028316,
+        "compression_time": 64.7946708202362,
+        "decompression_time": 162.78653502464294,
+        "psnr": 7.717086456746638
+    },
+    "christmas_tree_6000x4000_100_(4, 2, 2)": {
+        "compression_ratio": 1.6525685821381908,
+        "compression_time": 148.69426846504211,
+        "decompression_time": 174.70254349708557,
+        "psnr": 7.717065407728153
+    },
+    "christmas_tree_6000x4000_10_(4, 4, 4)": {
+        "compression_ratio": 13.225635458211196,
+        "compression_time": 55.86559319496155,
+        "decompression_time": 235.9248857498169,
+        "psnr": 7.717178246878048
+    },
+    "christmas_tree_6000x4000_50_(4, 4, 4)": {
+        "compression_ratio": 5.9659096997436105,
+        "compression_time": 60.10125207901001,
+        "decompression_time": 240.05320191383362,
+        "psnr": 7.716718430994
+    },
+    "christmas_tree_6000x4000_90_(4, 4, 4)": {
+        "compression_ratio": 2.798619081943649,
+        "compression_time": 88.52818083763123,
+        "decompression_time": 242.52223563194275,
+        "psnr": 7.71670221292092
+    },
+    "christmas_tree_6000x4000_100_(4, 4, 4)": {
+        "compression_ratio": 1.2784941297524888,
+        "compression_time": 211.7366166114807,
+        "decompression_time": 253.57962703704834,
+        "psnr": 7.716718018278352
+    }
+}
