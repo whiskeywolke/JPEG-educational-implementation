@@ -1,4 +1,5 @@
 import os.path
+import time
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -20,38 +21,54 @@ class EasyJpeg:
     compressed_byte_data = None
     compression_ratio = None
 
-    def __init__(self, original_image, decompressed_image, compressed_byte_data, compression_ratio):
+    compression_time = None
+    decompression_time = None
+
+    def __init__(self, original_image, decompressed_image, compressed_byte_data, compression_ratio, compression_time,
+                 decompression_time):
         self.original_image = original_image
         self.decompressed_image = decompressed_image
         self.compressed_byte_data = compressed_byte_data
         self.compression_ratio = compression_ratio
+        self.compression_time = compression_time
+        self.decompression_time = decompression_time
+
+    def set_original_image(self, path):
+        self.original_image = EasyJpeg.read_original_image(path)
 
     @staticmethod
-    def from_png(path, quantization_table_quality, subsampling_settings, block_size=8):
+    def read_original_image(path):
         original_image = plt.imread(path)
         # strip alpha channel if exists
         if original_image.shape[2] == 4:
             channels = np.dsplit(original_image, 4)
             original_image = np.dstack(channels[:3])
+        return original_image
+
+    @staticmethod
+    def from_png(path, quantization_table_quality, subsampling_settings, block_size=8):
+        original_image = EasyJpeg.read_original_image(path)
 
         original_size = os.path.getsize(path)
 
-        compressed_byte_data = EasyJpeg.__compress(original_image, quantization_table_quality, subsampling_settings,
-                                                   block_size)
-        decompressed_image = EasyJpeg.__decompress(compressed_byte_data)
+        compressed_byte_data, compression_time = EasyJpeg.__compress(original_image, quantization_table_quality,
+                                                                     subsampling_settings, block_size)
+        decompressed_image, decompression_time = EasyJpeg.__decompress(compressed_byte_data)
         compression_ratio = original_size / len(compressed_byte_data)
 
-        return EasyJpeg(original_image, decompressed_image, compressed_byte_data, compression_ratio)
+        return EasyJpeg(original_image, decompressed_image, compressed_byte_data, compression_ratio, compression_time,
+                        decompression_time)
 
     @staticmethod
     def from_compressed(path):
         with open(path, "rb") as fp:
             data = fp.read()
-            decompressed_image = EasyJpeg.__decompress(data)
-            return EasyJpeg(None, decompressed_image, data, None)
+            decompressed_image, decompression_time = EasyJpeg.__decompress(data)
+            return EasyJpeg(None, decompressed_image, data, None, None, decompression_time)
 
     @staticmethod
     def __compress(original_image, quantization_table_quality, subsampling_settings, block_size):
+        t0 = time.time()
         original_image_resolution = tuple(reversed(original_image.shape[:2]))
         y, u, v = rgb_to_yuv(image=original_image)
         u_subs, v_subs = subsample_u_v(u, v, *subsampling_settings)
@@ -84,10 +101,13 @@ class EasyJpeg:
                                                    *subsampling_settings,
                                                    *original_image_resolution
                                                    )
-        return compressed_byte_data
+        t1 = time.time()
+
+        return compressed_byte_data, t1 - t0
 
     @staticmethod
     def __decompress(image_data_bytes):
+        t0 = time.time()
         code_y, code_u, code_v, encoded_y, encoded_u, encoded_v, quantization_table, j, a, b, x_dim, y_dim = bytes_to_image_data(
             image_data_bytes)
         rl_encoded_y = decode_huffman(encoded_y, code_y)
@@ -119,11 +139,14 @@ class EasyJpeg:
 
         reconstructed_image = yuv_to_rgb(compressed_y, compressed_u, compressed_v)
         reconstructed_image = reconstructed_image.astype(int)
-        return reconstructed_image.clip(0, 255)
+        t1 = time.time()
+        return reconstructed_image.clip(0, 255), t1 - t0
 
-    def show_original(self):
+    def show_original(self, title=None):
         fig, ax = plt.subplots()
         ax.imshow(self.original_image)
+        if title:
+            ax.set_title(title)
         plt.show()
 
     def get_original(self):
@@ -135,6 +158,9 @@ class EasyJpeg:
     def get_compression_ratio(self):
         return self.compression_ratio
 
+    def set_compression_ratio(self, ratio):
+        self.compression_ratio = ratio
+
     def show_decompressed(self, title=None):
         fig, ax = plt.subplots()
         ax.imshow(self.get_decompressed().astype(np.uint8))
@@ -143,9 +169,6 @@ class EasyJpeg:
         plt.show()
 
     def get_difference(self, extrapolate=False):
-        print(np.max(self.original_image))
-        print(np.max(self.decompressed_image))
-
         original_image_rescaled = self.original_image * 255
         original_image_rescaled = original_image_rescaled.astype(int)
         diff = np.abs(original_image_rescaled - self.decompressed_image)
@@ -160,13 +183,37 @@ class EasyJpeg:
         with open(path, "wb") as fp:
             fp.write(self.compressed_byte_data)
 
-    def show_difference(self, extrapolate=False):
+    def show_difference(self, title=None, extrapolate=False):
         fig, ax = plt.subplots()
         ax.imshow(self.get_difference(extrapolate))
+        if title:
+            ax.set_title(title)
         plt.show()
 
     def store_compressed_png(self, path):
         plt.imsave(path, self.decompressed_image.astype(np.uint8))
+
+    def get_compression_time(self):
+        return self.compression_time
+
+    def get_decompression_time(self):
+        return self.decompression_time
+
+    def set_compression_time(self, t):
+        self.compression_time = t
+
+    def set_decompression_time(self, t):
+        self.decompression_time = t
+
+    def get_peak_signal_to_noise_ratio(self):
+        # https://www.geeksforgeeks.org/python-peak-signal-to-noise-ratio-psnr/
+        mse = np.mean((self.original_image - self.decompressed_image) ** 2)
+        # mse = (1/(X.shape[0] **2)) * np.sum((X - Xrec)**2)
+        psnr = 10 * np.log10((255 ** 2) / mse)
+        return psnr
+
+    def get_psnr(self):
+        return self.get_peak_signal_to_noise_ratio()
 
 
 def main():
@@ -184,6 +231,6 @@ def main():
     # jpeg2.show_decompressed()
     jpeg2.store_compressed_png("d.png")
 
-
-if __name__ == "__main__":
-    main()
+#
+# if __name__ == "__main__":
+#     main()
