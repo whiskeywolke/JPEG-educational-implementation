@@ -18,7 +18,8 @@ def resize_to_blocksize(color_component_in, block_size):
         color_component.append(extended_line)
     color_component = np.array(color_component)
 
-    color_component.resize(len(color_component) + remainder_y, len(color_component[0]))
+    # color_component.resize(len(color_component) + remainder_y)
+    color_component.resize((len(color_component) + remainder_y, len(color_component[0])), refcheck=False)
 
     return color_component
 

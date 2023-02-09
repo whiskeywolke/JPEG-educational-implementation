@@ -1,7 +1,13 @@
+import time
+
 import numpy as np
 
+resort_indices_inverse = {}
+resort_indices = {}
 
-def resort_values_zig_zag(block, block_size):
+
+def get_zig_zag_indices(block_size):
+    range_block = np.reshape(range(block_size ** 2), newshape=(block_size, block_size))
     new_block = []
     for diag in range(2 * block_size - 1):
         # direction = diag % 2 == 0
@@ -22,30 +28,50 @@ def resort_values_zig_zag(block, block_size):
                 y = diag - block_size + 1
 
         while block_size > x >= 0 and block_size > y >= 0:
-            new_block.append(block[y][x])
+            new_block.append(range_block[y][x])
             if direction:
                 x += 1
                 y -= 1
             else:
                 x -= 1
                 y += 1
-
     return new_block
 
 
+def resort_values_zig_zag(block, block_size):
+    global resort_indices
+    if block_size not in resort_indices:
+        resort_indices[block_size] = get_zig_zag_indices(block_size)
+
+    indices = resort_indices[block_size]
+    new_block = []
+
+    block = np.reshape(block, (1, block_size ** 2))[0]
+    # for index in indices:
+    #     new_block.append(block[index])
+    # return new_block
+    return [block[index] for index in indices ]
+
+
 def resort_values_zig_zag_reverse(block, block_size):
+    global resort_indices_inverse
     # to reverse the process of zigzag iteration, give incremental list to zigzag iteration
     # then find indices of incremental values
     # then use indices to reverse reordering
-    range_block = np.reshape(range(block_size ** 2), newshape=(block_size, block_size))
-    range_block_zz = resort_values_zig_zag(range_block, block_size)
-    indices = [range_block_zz.index(i) for i in range(block_size ** 2)]
 
-    new_block = []
+    # store in variable so that it is not calculated again for every block
+    if block_size not in resort_indices:
+        resort_indices[block_size] = get_zig_zag_indices(block_size)
+    if block_size not in resort_indices_inverse:
+        resort_indices_inverse[block_size] = [resort_indices[block_size].index(i) for i in range(block_size ** 2)]
 
-    for index in indices:
-        new_block.append(block[index])
+    indices = resort_indices_inverse[block_size]
 
+    # new_block = []
+    #
+    # for index in indices:
+    #     new_block.append(block[index])
+    new_block = [block[index] for index in indices]
     return np.reshape(new_block, (block_size, block_size))
 
 
@@ -53,7 +79,7 @@ def run_length_encode(input_vals):
     encoded_list = []
     current = input_vals[0]
     current_counter = 1
-    for i, val in enumerate(input_vals[1:]):
+    for val in input_vals[1:]:
         if val == current:
             current_counter += 1
         else:
@@ -87,16 +113,6 @@ def un_flatten(flattened):
     for i in range(len(flattened) // 2):
         res.append((flattened[i * 2], flattened[i * 2 + 1]))
     return res
-
-
-# def resort_and_run_length_encode(color_component, block_size):
-#     encoded_blocks = []
-#     for block in color_component:
-#         resorted = resort_values_zig_zag(block, block_size)
-#         run_length_encoded = run_length_encode(resorted)
-#         flattened = flatten(run_length_encoded)
-#         encoded_blocks += flattened
-#     return encoded_blocks
 
 
 def resort_and_run_length_encode(color_component, block_size):
@@ -234,6 +250,5 @@ def test():
     # print(b)
     # # print(list(random_list.reshape(1,64)[0]))
     # # print(list(random_list.reshape(1,64)[0]) == b)
-
 
 # test()
