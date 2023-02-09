@@ -273,12 +273,11 @@ class EasyJpeg:
 
     def get_peak_signal_to_noise_ratio(self):
         # https://www.geeksforgeeks.org/python-peak-signal-to-noise-ratio-psnr/
-        original = self.original_image
-        if np.max(original) <= 1:
-            original *= 255
-
         # also correct for rgb (as diff and mean works with multidimensional arrays)
-        mse = np.mean((original - self.decompressed_image) ** 2)
+        if np.max(self.original_image) <= 1:
+            mse = np.mean(((self.original_image * 255) - self.decompressed_image) ** 2)
+        else:
+            mse = np.mean((self.original_image - self.decompressed_image) ** 2)
 
         if mse == 0:
             return np.inf
@@ -371,11 +370,11 @@ def main():
     print("decompression", {k: v for k, v in
                             sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1],
                                    reverse=True)})
-    # jpeg.show_comparison()
     # t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
     # jpeg.store_comparison(t)
     print("psnr", jpeg.get_psnr())
+    jpeg.show_comparison()
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
