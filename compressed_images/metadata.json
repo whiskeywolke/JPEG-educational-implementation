@@ -897,29 +897,29 @@
     },
     "lenna_64x64_10_(4, 2, 2)": {
         "compression_ratio": 9.470319634703197,
-        "compression_time": 0.004986286163330078,
-        "decompression_time": 0.004987001419067383,
+        "compression_time": 0.003989219665527344,
+        "decompression_time": 0.003989458084106445,
         "compression_time_detail": {
             "s0_get_resolution": 0.0,
             "s1_split_yuv": 0.0,
             "s2_subsample": 0.0,
-            "s3_split_blocks": 0.000997304916381836,
-            "s4_dct": 0.0009970664978027344,
-            "s5_quantization": 0.0009975433349609375,
-            "s6_zigzag_rl_encode": 0.0019943714141845703,
+            "s3_split_blocks": 0.0009808540344238281,
+            "s4_dct": 0.0,
+            "s5_quantization": 0.0009965896606445312,
+            "s6_zigzag_rl_encode": 0.0020117759704589844,
             "s7_huffman": 0.0,
             "s8_binary_conversion": 0.0
         },
         "decompression_detail": {
-            "s0_binary_conversion": 0.0009975433349609375,
+            "s0_binary_conversion": 0.0,
             "s1_decode_huffman": 0.0,
-            "s2_inverse_zig_zag_rl": 0.001994609832763672,
+            "s2_inverse_zig_zag_rl": 0.0019948482513427734,
             "s3_inverse_quantize": 0.0,
-            "s4_dct": 0.000997304916381836,
+            "s4_dct": 0.0010030269622802734,
             "s5_reverse_parameters": 0.0,
             "s6_merge_blocks": 0.0,
-            "s7_upsample": 0.0009975433349609375,
-            "s8_yuv_to_rgb": 0.0
+            "s7_upsample": 0.0,
+            "s8_yuv_to_rgb": 0.0009915828704833984
         },
         "psnr": 5.2661771208487265
     },
