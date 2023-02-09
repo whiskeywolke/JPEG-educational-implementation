@@ -1,3 +1,9 @@
+import concurrent.futures
+import itertools
+
+import numpy as np
+
+
 class Node:
     def __init__(self, value, occurrence, left=None, right=None):
         self.value = value
@@ -48,17 +54,18 @@ def generate_huffman_code(values):
 
 
 def encode_huffman(huffman_code, message):
-    encoded = ""
-    for val in message:
-        encoded += huffman_code[val]
-    return encoded
+    # encoded = ""
+    # for val in message:
+    #     encoded += huffman_code[val]
+    # print(len(encoded))
+    # return encoded
+    return "".join([huffman_code[val] for val in message])  # faster about factor 100
 
 
 def decode_huffman(encoded, table):
     # reverse lookup table
     new_table = {key: value for value, key in table.items()}
     assert len(table) == len(new_table)
-
     decoded = []
     symbol = None
     for s in encoded:
@@ -71,10 +78,10 @@ def decode_huffman(encoded, table):
             symbol = None
 
     # check that all symbols have been found
-    if symbol:
-        print(encoded)
-        print(table)
-        print(symbol)
-        print(decoded)
+    # if symbol:
+    #     print(encoded)
+    #     print(table)
+    #     print(symbol)
+    #     print(decoded)
     assert symbol is None
     return decoded

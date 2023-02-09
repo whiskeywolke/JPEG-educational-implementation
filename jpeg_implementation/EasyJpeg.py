@@ -15,6 +15,8 @@ from jpeg_implementation.subsample import subsample_u_v, calculate_down_sampled_
 
 
 class EasyJpeg:
+    original_file_name = None
+
     original_image = None
     decompressed_image = None
 
@@ -27,8 +29,9 @@ class EasyJpeg:
     decompression_time = None
     decompression_time_details = None
 
-    def __init__(self, original_image, decompressed_image, compressed_byte_data, compression_ratio,
+    def __init__(self, filename, original_image, decompressed_image, compressed_byte_data, compression_ratio,
                  compression_time, compression_time_details, decompression_time, decompression_time_details):
+        self.original_file_name = filename
         self.original_image = original_image
         self.decompressed_image = decompressed_image
         self.compressed_byte_data = compressed_byte_data
@@ -62,7 +65,7 @@ class EasyJpeg:
         decompressed_image, decompression_time, decompression_time_detail = EasyJpeg.__decompress(compressed_byte_data)
         compression_ratio = original_size / len(compressed_byte_data)
 
-        return EasyJpeg(original_image, decompressed_image, compressed_byte_data, compression_ratio,
+        return EasyJpeg(path, original_image, decompressed_image, compressed_byte_data, compression_ratio,
                         compression_time, compression_times_detail, decompression_time, decompression_time_detail)
 
     @staticmethod
@@ -70,7 +73,7 @@ class EasyJpeg:
         with open(path, "rb") as fp:
             data = fp.read()
             decompressed_image, decompression_time, decompression_time_detail = EasyJpeg.__decompress(data)
-            return EasyJpeg(None, decompressed_image, data, None, None, None,
+            return EasyJpeg(None, None, decompressed_image, data, None, None, None,
                             decompression_time, decompression_time_detail)
 
     @staticmethod
@@ -206,6 +209,9 @@ class EasyJpeg:
     def get_original(self):
         return self.original_image
 
+    def set_original_file_name(self, name):
+        self.original_file_name = name
+
     def get_decompressed(self):
         return self.decompressed_image
 
@@ -266,6 +272,7 @@ class EasyJpeg:
         self.decompression_time = t
 
     def get_peak_signal_to_noise_ratio(self):
+        # todo fix this
         # https://www.geeksforgeeks.org/python-peak-signal-to-noise-ratio-psnr/
         mse = np.mean((self.original_image - self.decompressed_image) ** 2)
         # mse = (1/(X.shape[0] **2)) * np.sum((X - Xrec)**2)
@@ -275,12 +282,58 @@ class EasyJpeg:
     def get_psnr(self):
         return self.get_peak_signal_to_noise_ratio()
 
+    def show_comparison(self):
+        fig, ax = plt.subplots(1, 3, figsize=(15, 5.5))
+
+        ax[0].imshow(self.original_image)
+        ax[0].set_title("Original Image")
+        ax[1].imshow(self.decompressed_image)
+        ax[1].set_title("Compressed Image")
+        ax[2].imshow(self.get_difference())
+        ax[2].set_title("Difference between Original & Compressed")
+
+        file_name = self.original_file_name.split("/")[-1].split(".")[0]  # extract input image path
+
+        title = f"{file_name} Compression ratio: {np.round(self.get_compression_ratio(), 3)}, " \
+                f"PSNR: {np.round(self.get_psnr(), 3)}db, " \
+                f"Compression time: {np.round(self.get_compression_time(), 4)}s, " \
+                f"Decompression time: {np.round(self.get_decompression_time(), 4)}s"
+
+        plt.suptitle(title, fontsize=15)
+        plt.tight_layout()
+        # plt.savefig(f"results/{file_name}_comparison.png", dpi=300)
+        # if show:
+        plt.show()
+
+    def store_comparison(self, filename=None):
+        fig, ax = plt.subplots(1, 3, figsize=(15, 5.5))
+
+        ax[0].imshow(self.original_image)
+        ax[0].set_title("Original Image")
+        ax[1].imshow(self.decompressed_image)
+        ax[1].set_title("Compressed Image")
+        ax[2].imshow(self.get_difference())
+        ax[2].set_title("Difference between Original & Compressed")
+
+        file_name = self.original_file_name.split("/")[-1].split(".")[0]  # extract input image path
+
+        title = f"{file_name} Compression ratio: {np.round(self.get_compression_ratio(), 3)}, " \
+                f"PSNR: {np.round(self.get_psnr(), 3)}db, " \
+                f"Compression time: {np.round(self.get_compression_time(), 4)}s, " \
+                f"Decompression time: {np.round(self.get_decompression_time(), 4)}s"
+
+        plt.suptitle(title, fontsize=15)
+        plt.tight_layout()
+        if filename:
+            plt.savefig(filename, dpi=300)
+        else:
+            plt.savefig(f"results/{file_name}_comparison.png", dpi=300)
 
 def main():
-    image_path = "../images/lenna_32x32.png"
-    image_path = "../images/lenna_256x256.png"
-    image_path = "../images/lenna_512x512.png"
-    image_path = "../images/christmas_tree_6000x4000.png"
+    image_path = "images/lenna_32x32.png"
+    # image_path = "../images/lenna_256x256.png"
+    # image_path = "../images/lenna_512x512.png"
+    # image_path = "../images/christmas_tree_6000x4000.png"
     # image_path = "../images/Barns_grand_tetons_1600x1195.png"
 
     # jpeg = EasyJpeg.from_png(image_path, 10, (4, 4, 4), 8)
@@ -295,13 +348,18 @@ def main():
     # # jpeg2.show_decompressed()
     # jpeg2.store_compressed_png("d.png")
 
-    jpeg = EasyJpeg.from_png(image_path, 10, (4, 4, 4), 8)
+    jpeg = EasyJpeg.from_png(image_path, 100, (4, 4, 4), 8)
     print(jpeg.get_compression_time(), jpeg.get_decompression_time())
     # print(jpeg.get_compression_time_details())
     # print(jpeg.get_decompression_time_details())
-    print("compression", {k: v for k, v in sorted(jpeg.get_compression_time_details().items(), key=lambda item: item[1], reverse=True)})
-    print("decompression", {k: v for k, v in sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1], reverse=True)})
-    jpeg.show_decompressed()
+    print("compression", {k: v for k, v in
+                          sorted(jpeg.get_compression_time_details().items(), key=lambda item: item[1], reverse=True)})
+    print("decompression", {k: v for k, v in
+                            sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1],
+                                   reverse=True)})
+    # jpeg.show_comparison()
+    t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
+    jpeg.store_comparison(t)
 
 if __name__ == "__main__":
     main()
