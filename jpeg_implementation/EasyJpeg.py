@@ -272,10 +272,17 @@ class EasyJpeg:
         self.decompression_time = t
 
     def get_peak_signal_to_noise_ratio(self):
-        # todo fix this
         # https://www.geeksforgeeks.org/python-peak-signal-to-noise-ratio-psnr/
-        mse = np.mean((self.original_image - self.decompressed_image) ** 2)
-        # mse = (1/(X.shape[0] **2)) * np.sum((X - Xrec)**2)
+        original = self.original_image
+        if np.max(original) <= 1:
+            original *= 255
+
+        # also correct for rgb (as diff and mean works with multidimensional arrays)
+        mse = np.mean((original - self.decompressed_image) ** 2)
+
+        if mse == 0:
+            return np.inf
+
         psnr = 10 * np.log10((255 ** 2) / mse)
         return psnr
 
@@ -355,6 +362,7 @@ def main():
     # jpeg2.store_compressed_png("d.png")
 
     jpeg = EasyJpeg.from_png(image_path, 100, (4, 4, 4), 8)
+    # jpeg = EasyJpeg.from_png(image_path, 10, (4, 1, 0), 8)
     print(jpeg.get_compression_time(), jpeg.get_decompression_time())
     # print(jpeg.get_compression_time_details())
     # print(jpeg.get_decompression_time_details())
@@ -363,9 +371,10 @@ def main():
     print("decompression", {k: v for k, v in
                             sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1],
                                    reverse=True)})
-    jpeg.show_comparison()
+    # jpeg.show_comparison()
     # t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
     # jpeg.store_comparison(t)
+    print("psnr", jpeg.get_psnr())
 
 
 # if __name__ == "__main__":
