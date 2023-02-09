@@ -282,7 +282,7 @@ class EasyJpeg:
     def get_psnr(self):
         return self.get_peak_signal_to_noise_ratio()
 
-    def show_comparison(self):
+    def show_comparison(self, image_name=None, quality="", subsampling=""):
         fig, ax = plt.subplots(1, 3, figsize=(15, 5.5))
 
         ax[0].imshow(self.original_image)
@@ -293,19 +293,20 @@ class EasyJpeg:
         ax[2].set_title("Difference between Original & Compressed")
 
         file_name = self.original_file_name.split("/")[-1].split(".")[0]  # extract input image path
+        description = file_name
+        if image_name:
+            description = " ".join([image_name, quality, subsampling])
 
-        title = f"{file_name} Compression ratio: {np.round(self.get_compression_ratio(), 3)}, " \
+        title = f"{description} Compression ratio: {np.round(self.get_compression_ratio(), 3)}, " \
                 f"PSNR: {np.round(self.get_psnr(), 3)}db, " \
                 f"Compression time: {np.round(self.get_compression_time(), 4)}s, " \
                 f"Decompression time: {np.round(self.get_decompression_time(), 4)}s"
 
         plt.suptitle(title, fontsize=15)
         plt.tight_layout()
-        # plt.savefig(f"results/{file_name}_comparison.png", dpi=300)
-        # if show:
         plt.show()
 
-    def store_comparison(self, filename=None):
+    def store_comparison(self, out_filename=None, image_name=None, quality="", subsampling=""):
         fig, ax = plt.subplots(1, 3, figsize=(15, 5.5))
 
         ax[0].imshow(self.original_image)
@@ -316,18 +317,23 @@ class EasyJpeg:
         ax[2].set_title("Difference between Original & Compressed")
 
         file_name = self.original_file_name.split("/")[-1].split(".")[0]  # extract input image path
+        description = file_name
+        if image_name:
+            description = " ".join([image_name, quality, subsampling])
 
-        title = f"{file_name} Compression ratio: {np.round(self.get_compression_ratio(), 3)}, " \
+        title = f"{description} Compression ratio: {np.round(self.get_compression_ratio(), 3)}, " \
                 f"PSNR: {np.round(self.get_psnr(), 3)}db, " \
                 f"Compression time: {np.round(self.get_compression_time(), 4)}s, " \
                 f"Decompression time: {np.round(self.get_decompression_time(), 4)}s"
 
         plt.suptitle(title, fontsize=15)
         plt.tight_layout()
-        if filename:
-            plt.savefig(filename, dpi=300)
+        if out_filename:
+            plt.savefig(out_filename, dpi=300)
         else:
             plt.savefig(f"results/{file_name}_comparison.png", dpi=300)
+        plt.close(fig)
+
 
 def main():
     image_path = "images/lenna_32x32.png"
@@ -357,9 +363,10 @@ def main():
     print("decompression", {k: v for k, v in
                             sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1],
                                    reverse=True)})
-    # jpeg.show_comparison()
-    t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
-    jpeg.store_comparison(t)
+    jpeg.show_comparison()
+    # t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
+    # jpeg.store_comparison(t)
 
-if __name__ == "__main__":
-    main()
+
+# if __name__ == "__main__":
+#     main()
