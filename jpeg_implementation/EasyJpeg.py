@@ -346,6 +346,7 @@ class EasyJpeg:
 
 def main():
     # image_path = "images/lenna_32x32.png"
+    # image_path = "images/lenna_64x64.png"
     # image_path = "images/lenna_256x256.png"
     image_path = "images/lenna_512x512.png"
     # image_path = "../images/christmas_tree_6000x4000.png"
@@ -381,7 +382,7 @@ def main():
     # jpeg.show_comparison()
 
     filename = image_path.split("/")[-1].split(".")[0]
-    subsampling_settings = (4, 4, 4)
+    subsampling_settings = (4, 2, 1)
     storage_path = "quantization_table_test/images/"
 
     from PIL import Image
@@ -408,7 +409,7 @@ def main():
     frames += reversed(frames)
 
     frame_one = frames[0]
-    frame_one.save(f"quantization_table_test/{filename}_quantization_effect.gif", format="GIF", append_images=frames,
+    frame_one.save(f"quantization_table_test/{filename}_{str(subsampling_settings)}_quantization_effect.gif", format="GIF", append_images=frames,
                    save_all=True, duration=100, loop=0)
 
 
