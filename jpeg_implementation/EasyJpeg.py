@@ -6,7 +6,8 @@ from matplotlib import pyplot as plt
 
 from jpeg_implementation.dct import block_dct2, block_idct2
 from jpeg_implementation.huffman import generate_huffman_code, encode_huffman, decode_huffman
-from jpeg_implementation.quantization import quantization_tables, quantize, quantize_inverse
+from jpeg_implementation.quantization import quantize, quantize_inverse, \
+    get_quantization_matrix_for_quality_percent
 from jpeg_implementation.rgbToYuv import rgb_to_yuv, yuv_to_rgb
 from jpeg_implementation.runLengthEncode import resort_and_run_length_encode, unsort_and_run_length_decode
 from jpeg_implementation.serialize import image_data_to_bytes, bytes_to_image_data
@@ -98,7 +99,7 @@ class EasyJpeg:
         trans_v = block_dct2(np.array(split_v) - 128, block_size)
         t5 = time.time()
 
-        quantization_table = quantization_tables[quantization_table_quality]
+        quantization_table = get_quantization_matrix_for_quality_percent(quantization_table_quality)
         quantized_y = quantize(trans_y, quantization_table)
         quantized_u = quantize(trans_u, quantization_table)
         quantized_v = quantize(trans_v, quantization_table)
@@ -342,8 +343,8 @@ class EasyJpeg:
 
 
 def main():
-    image_path = "images/lenna_32x32.png"
-    # image_path = "../images/lenna_256x256.png"
+    # image_path = "images/lenna_32x32.png"
+    image_path = "images/lenna_256x256.png"
     # image_path = "../images/lenna_512x512.png"
     # image_path = "../images/christmas_tree_6000x4000.png"
     # image_path = "../images/Barns_grand_tetons_1600x1195.png"
@@ -360,8 +361,9 @@ def main():
     # # jpeg2.show_decompressed()
     # jpeg2.store_compressed_png("d.png")
 
-    jpeg = EasyJpeg.from_png(image_path, 100, (4, 4, 4), 8)
+    # jpeg = EasyJpeg.from_png(image_path, 100, (4, 4, 4), 8)
     # jpeg = EasyJpeg.from_png(image_path, 10, (4, 1, 0), 8)
+    jpeg = EasyJpeg.from_png(image_path, 0, (4, 4, 4), 8)
     print(jpeg.get_compression_time(), jpeg.get_decompression_time())
     # print(jpeg.get_compression_time_details())
     # print(jpeg.get_decompression_time_details())
