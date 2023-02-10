@@ -1,7 +1,9 @@
+import glob
 import os.path
 import time
 
 import numpy as np
+from PIL import ImageDraw
 from matplotlib import pyplot as plt
 
 from jpeg_implementation.dct import block_dct2, block_idct2
@@ -251,7 +253,7 @@ class EasyJpeg:
             ax.set_title(title)
         plt.show()
 
-    def store_compressed_png(self, path):
+    def store_decompressed_png(self, path):
         plt.imsave(path, self.decompressed_image.astype(np.uint8))
 
     def get_compression_time(self):
@@ -344,8 +346,8 @@ class EasyJpeg:
 
 def main():
     # image_path = "images/lenna_32x32.png"
-    image_path = "images/lenna_256x256.png"
-    # image_path = "../images/lenna_512x512.png"
+    # image_path = "images/lenna_256x256.png"
+    image_path = "images/lenna_512x512.png"
     # image_path = "../images/christmas_tree_6000x4000.png"
     # image_path = "../images/Barns_grand_tetons_1600x1195.png"
 
@@ -363,19 +365,51 @@ def main():
 
     # jpeg = EasyJpeg.from_png(image_path, 100, (4, 4, 4), 8)
     # jpeg = EasyJpeg.from_png(image_path, 10, (4, 1, 0), 8)
-    jpeg = EasyJpeg.from_png(image_path, 0, (4, 4, 4), 8)
-    print(jpeg.get_compression_time(), jpeg.get_decompression_time())
-    # print(jpeg.get_compression_time_details())
-    # print(jpeg.get_decompression_time_details())
-    print("compression", {k: v for k, v in
-                          sorted(jpeg.get_compression_time_details().items(), key=lambda item: item[1], reverse=True)})
-    print("decompression", {k: v for k, v in
-                            sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1],
-                                   reverse=True)})
-    # t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
-    # jpeg.store_comparison(t)
-    print("psnr", jpeg.get_psnr())
-    jpeg.show_comparison()
+
+    # jpeg = EasyJpeg.from_png(image_path, 0, (4, 4, 4), 8)
+    # print(jpeg.get_compression_time(), jpeg.get_decompression_time())
+    # # print(jpeg.get_compression_time_details())
+    # # print(jpeg.get_decompression_time_details())
+    # print("compression", {k: v for k, v in
+    #                       sorted(jpeg.get_compression_time_details().items(), key=lambda item: item[1], reverse=True)})
+    # print("decompression", {k: v for k, v in
+    #                         sorted(jpeg.get_decompression_time_details().items(), key=lambda item: item[1],
+    #                                reverse=True)})
+    # # t = "results/lenna_64x64_10_(4, 2, 2)_comparison.png"
+    # # jpeg.store_comparison(t)
+    # print("psnr", jpeg.get_psnr())
+    # jpeg.show_comparison()
+
+    filename = image_path.split("/")[-1].split(".")[0]
+    subsampling_settings = (4, 4, 4)
+    storage_path = "quantization_table_test/images/"
+
+    from PIL import Image
+    for i in range(101):
+        out = f"{storage_path}{filename}_{str(subsampling_settings)}_{str(i)}.png"
+        print(out)
+        jpeg = EasyJpeg.from_png(image_path, i, (4, 4, 4), 8)
+        # jpeg.store_decompressed_png(out)
+        psnr = jpeg.get_psnr()
+        img = Image.fromarray(np.uint8(jpeg.get_decompressed()))
+        draw = ImageDraw.Draw(img)
+        draw.text((3, 3), f"{str(i)}%, psnr: {round(psnr, 3)}db")
+        img.save(out)
+
+    frames = []
+    for i in range(101):
+        out = f"{storage_path}{filename}_{str(subsampling_settings)}_{str(i)}.png"
+        img = Image.open(out)
+        # draw = ImageDraw.Draw(img)
+        # draw.text((3, 3), f"{str(i)}%, psnr: {round(psnr,3)}db")
+
+        frames.append(img)
+
+    frames += reversed(frames)
+
+    frame_one = frames[0]
+    frame_one.save(f"quantization_table_test/{filename}_quantization_effect.gif", format="GIF", append_images=frames,
+                   save_all=True, duration=100, loop=0)
 
 
 if __name__ == "__main__":
