@@ -65,6 +65,7 @@ def get_quantization_matrix_for_quality_percent(quality_percentage):
     else:
         raise RuntimeError("Should not be here - impossible")
 
+
 def quantize(blocks, quantization_table):
     quantized = []
 
@@ -86,8 +87,9 @@ def quantize_inverse(blocks, quantization_table):
 
     return i_quantized
 
+
 def test():
     res = get_quantization_matrix_for_quality_percent(100)
     print(res)
 
-test()
+# test()
