@@ -24,31 +24,30 @@ class EasyJpeg:
     decompressed_image = None
 
     compressed_byte_data = None
-    compression_ratio = None
 
-    compression_time = None
+    png_file_size_bytes = None  # PNG file size (as PNG is already using lossless compression methods)
+    pure_data_size_bytes = None  # data volume for RGB image (without encoding) (=resolution *3bytes)
+
     compression_time_details = None
-
-    decompression_time = None
     decompression_time_details = None
 
-    def __init__(self, filename, original_image, decompressed_image, compressed_byte_data, compression_ratio,
-                 compression_time, compression_time_details, decompression_time, decompression_time_details):
+    def __init__(self, filename, original_image, decompressed_image, compressed_byte_data,
+                 png_file_size_bytes, pure_data_size_bytes,
+                 compression_time_details, decompression_time_details):
         self.original_file_name = filename
         self.original_image = original_image
         self.decompressed_image = decompressed_image
         self.compressed_byte_data = compressed_byte_data
-        self.compression_ratio = compression_ratio
-        self.compression_time = compression_time
+        self.png_file_size_bytes = png_file_size_bytes
+        self.pure_data_size_bytes = pure_data_size_bytes
         self.compression_time_details = compression_time_details
-        self.decompression_time = decompression_time
         self.decompression_time_details = decompression_time_details
 
     def set_original_image(self, path):
-        self.original_image = EasyJpeg.read_original_image(path)
+        self.original_image = EasyJpeg.__read_original_image(path)
 
     @staticmethod
-    def read_original_image(path):
+    def __read_original_image(path):
         original_image = plt.imread(path)
         # strip alpha channel if exists
         if original_image.shape[2] == 4:
@@ -58,26 +57,28 @@ class EasyJpeg:
 
     @staticmethod
     def from_png(path, quantization_table_quality, subsampling_settings, block_size=8):
-        original_image = EasyJpeg.read_original_image(path)
+        original_image = EasyJpeg.__read_original_image(path)
+
+        compressed_byte_data, compression_times_detail = \
+            EasyJpeg.__compress(original_image, quantization_table_quality, subsampling_settings, block_size)
+        decompressed_image, decompression_time_detail = EasyJpeg.__decompress(compressed_byte_data)
 
         original_size = os.path.getsize(path)
-        compressed_byte_data, compression_time, compression_times_detail = EasyJpeg.__compress(original_image,
-                                                                                               quantization_table_quality,
-                                                                                               subsampling_settings,
-                                                                                               block_size)
-        decompressed_image, decompression_time, decompression_time_detail = EasyJpeg.__decompress(compressed_byte_data)
-        compression_ratio = original_size / len(compressed_byte_data)
+        original_image_resolution = tuple(reversed(original_image.shape[:2]))
 
-        return EasyJpeg(path, original_image, decompressed_image, compressed_byte_data, compression_ratio,
-                        compression_time, compression_times_detail, decompression_time, decompression_time_detail)
+        png_file_size_bytes = original_size
+        pure_data_size_bytes = original_image_resolution[0] * original_image_resolution[1] * 3
+
+        return EasyJpeg(path, original_image, decompressed_image, compressed_byte_data,
+                        png_file_size_bytes, pure_data_size_bytes,
+                        compression_times_detail, decompression_time_detail)
 
     @staticmethod
     def from_compressed(path):
         with open(path, "rb") as fp:
             data = fp.read()
-            decompressed_image, decompression_time, decompression_time_detail = EasyJpeg.__decompress(data)
-            return EasyJpeg(None, None, decompressed_image, data, None, None, None,
-                            decompression_time, decompression_time_detail)
+            decompressed_image, decompression_time_detail = EasyJpeg.__decompress(data)
+            return EasyJpeg(None, None, decompressed_image, data, None, None, None, decompression_time_detail)
 
     @staticmethod
     def __compress(original_image, quantization_table_quality, subsampling_settings, block_size):
@@ -129,6 +130,7 @@ class EasyJpeg:
         t9 = time.time()
 
         times_detail = {
+            "compression_time": t9 - t0,
             "s0_get_resolution": t1 - t0,
             "s1_split_yuv": t2 - t1,
             "s2_subsample": t3 - t2,
@@ -139,8 +141,7 @@ class EasyJpeg:
             "s7_huffman": t8 - t7,
             "s8_binary_conversion": t9 - t8
         }
-
-        return compressed_byte_data, t9 - t0, times_detail
+        return compressed_byte_data, times_detail
 
     @staticmethod
     def __decompress(image_data_bytes):
@@ -190,6 +191,7 @@ class EasyJpeg:
         t9 = time.time()
 
         times_detail = {
+            "decompression_time": t9 - t0,
             "s0_binary_conversion": t1 - t0,
             "s1_decode_huffman": t2 - t1,
             "s2_inverse_zig_zag_rl": t3 - t2,
@@ -200,7 +202,7 @@ class EasyJpeg:
             "s7_upsample": t8 - t7,
             "s8_yuv_to_rgb": t9 - t8
         }
-        return reconstructed_image, t9 - t0, times_detail
+        return reconstructed_image, times_detail
 
     def show_original(self, title=None):
         fig, ax = plt.subplots()
@@ -219,10 +221,16 @@ class EasyJpeg:
         return self.decompressed_image
 
     def get_compression_ratio(self):
-        return self.compression_ratio
+        return self.pure_data_size_bytes / len(self.compressed_byte_data)
 
-    def set_compression_ratio(self, ratio):
-        self.compression_ratio = ratio
+    def get_compression_ratio_to_png(self):
+        return self.png_file_size_bytes / len(self.compressed_byte_data)
+
+    def set_pure_data_size_bytes(self, size):
+        self.pure_data_size_bytes = size
+
+    def set_png_size_bytes(self, size):
+        self.png_file_size_bytes = size
 
     def show_decompressed(self, title=None):
         fig, ax = plt.subplots()
@@ -257,22 +265,16 @@ class EasyJpeg:
         plt.imsave(path, self.decompressed_image.astype(np.uint8))
 
     def get_compression_time(self):
-        return self.compression_time
+        return self.compression_time_details["compression_time"]
 
     def get_compression_time_details(self):
         return self.compression_time_details
 
     def get_decompression_time(self):
-        return self.decompression_time
+        return self.decompression_time_details["decompression_time"]
 
     def get_decompression_time_details(self):
         return self.decompression_time_details
-
-    def set_compression_time(self, t):
-        self.compression_time = t
-
-    def set_decompression_time(self, t):
-        self.decompression_time = t
 
     def get_peak_signal_to_noise_ratio(self):
         # https://www.geeksforgeeks.org/python-peak-signal-to-noise-ratio-psnr/
@@ -381,37 +383,57 @@ def main():
     # print("psnr", jpeg.get_psnr())
     # jpeg.show_comparison()
 
+
+def make_gif_quantization_quality():
+    # image_path = "images/lenna_128x128.png"
+    # image_path = "images/lenna_256x256.png"
+    image_path = "images/lenna_512x512.png"
     filename = image_path.split("/")[-1].split(".")[0]
-    subsampling_settings = (4, 2, 1)
-    storage_path = "quantization_table_test/images/"
+    subsampling_settings = [(4, 1, 0), (4, 1, 1), (4, 2, 0), (4, 2, 2), (4, 4, 4)]
+    for s in subsampling_settings:
+        storage_path = "quantization_table_test/images/"
+        from PIL import Image
+        for i in range(101):
+            out = f"{storage_path}{filename}_{str(s)}_{str(i)}.png"
+            print(out)
+            jpeg = EasyJpeg.from_png(image_path, i, s, 8)
+            # jpeg.store_decompressed_png(out)
+            psnr = jpeg.get_psnr()
+            img = Image.fromarray(np.uint8(jpeg.get_decompressed()))
+            draw = ImageDraw.Draw(img)
+            draw.text((3, 3), f"{str(i)}%, psnr: {round(psnr, 3)}db")
+            img.save(out)
 
-    from PIL import Image
-    for i in range(101):
-        out = f"{storage_path}{filename}_{str(subsampling_settings)}_{str(i)}.png"
-        print(out)
-        jpeg = EasyJpeg.from_png(image_path, i, (4, 4, 4), 8)
-        # jpeg.store_decompressed_png(out)
-        psnr = jpeg.get_psnr()
-        img = Image.fromarray(np.uint8(jpeg.get_decompressed()))
-        draw = ImageDraw.Draw(img)
-        draw.text((3, 3), f"{str(i)}%, psnr: {round(psnr, 3)}db")
-        img.save(out)
+        frames = []
+        for i in range(101):
+            out = f"{storage_path}{filename}_{str(s)}_{str(i)}.png"
+            img = Image.open(out)
+            # draw = ImageDraw.Draw(img)
+            # draw.text((3, 3), f"{str(i)}%, psnr: {round(psnr,3)}db")
 
-    frames = []
-    for i in range(101):
-        out = f"{storage_path}{filename}_{str(subsampling_settings)}_{str(i)}.png"
-        img = Image.open(out)
-        # draw = ImageDraw.Draw(img)
-        # draw.text((3, 3), f"{str(i)}%, psnr: {round(psnr,3)}db")
+            frames.append(img)
 
-        frames.append(img)
+        frames += reversed(frames)
 
-    frames += reversed(frames)
+        frame_one = frames[0]
+        frame_one.save(f"quantization_table_test/{filename}_{str(s)}_quantization_effect.gif",
+                       format="GIF", append_images=frames,
+                       save_all=True, duration=100, loop=0)
 
-    frame_one = frames[0]
-    frame_one.save(f"quantization_table_test/{filename}_{str(subsampling_settings)}_quantization_effect.gif", format="GIF", append_images=frames,
-                   save_all=True, duration=100, loop=0)
+
+def test_compression_qualities():
+    image_path = "images/lenna_512x512.png"
+    subsampling_settings = (4, 2, 0)
+    quantization_quality = 10
+
+    jpeg = EasyJpeg.from_png(image_path, quantization_quality, subsampling_settings)
+    tcr = jpeg.get_compression_ratio_to_png()
+    acr = jpeg.get_compression_ratio()
+    print(acr, tcr)
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    make_gif_quantization_quality()
+    # test_compression_qualities()
+    pass
