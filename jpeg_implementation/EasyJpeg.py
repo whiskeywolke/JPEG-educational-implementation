@@ -53,6 +53,10 @@ class EasyJpeg:
         if original_image.shape[2] == 4:
             channels = np.dsplit(original_image, 4)
             original_image = np.dstack(channels[:3])
+        if ".png" in path:
+            original_image *= 255
+            original_image = np.rint(original_image)
+            original_image = original_image.astype(int)
         return original_image
 
     @staticmethod
@@ -240,9 +244,7 @@ class EasyJpeg:
         plt.show()
 
     def get_difference(self, extrapolate=False):
-        original_image_rescaled = self.original_image * 255
-        original_image_rescaled = original_image_rescaled.astype(int)
-        diff = np.abs(original_image_rescaled - self.decompressed_image)
+        diff = np.abs(self.original_image - self.decompressed_image)
 
         if extrapolate:
             diff = diff * (255 / np.max(diff))
@@ -432,8 +434,18 @@ def test_compression_qualities():
     print(acr, tcr)
 
 
+def test3():
+    image_path = "images/lenna_32x32.png"
+    subsampling_settings = (4, 2, 0)
+    quantization_quality = 10
+    jpeg = EasyJpeg.from_png(image_path, quantization_quality, subsampling_settings)
+    jpeg.show_decompressed()
+    jpeg.show_original()
+    jpeg.show_comparison()
+
 if __name__ == "__main__":
     # main()
-    make_gif_quantization_quality()
+    # make_gif_quantization_quality()
+    test3()
     # test_compression_qualities()
     pass
