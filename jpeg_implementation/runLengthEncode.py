@@ -10,8 +10,8 @@ def get_zig_zag_indices(block_size):
     range_block = np.reshape(range(block_size ** 2), newshape=(block_size, block_size))
     new_block = []
     for diag in range(2 * block_size - 1):
-        # direction = diag % 2 == 0
-        direction = True
+        direction = diag % 2 == 0
+#        direction = True
         if diag < block_size:
             if direction:
                 x = 0
@@ -95,7 +95,7 @@ def run_length_encode(input_vals):
 def run_length_decode(encoded):
     decoded = []
     for val, count in encoded:
-        decoded += [val] * count
+        decoded += [val] * int(count)
     return decoded
 
 
@@ -252,3 +252,13 @@ def test():
     # # print(list(random_list.reshape(1,64)[0]) == b)
 
 # test()
+
+def test2():
+    block_size = 3
+    zigzag = get_zig_zag_indices(block_size)
+    zigzag_i = [zigzag.index(i) for i in range(block_size ** 2)]
+
+    print(zigzag)
+    print(zigzag_i)
+
+# test2()
