@@ -1,3 +1,4 @@
+# Michael Mente 01634435, Lukas Pezzei 11834075, Julian Saria 01608505
 import time
 
 import numpy as np
